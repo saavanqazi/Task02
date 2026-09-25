@@ -1,5 +1,21 @@
 # Roadmap — `tech-b53-t4-store-rating-claim-verification`
 
+## Status and decisions (updated)
+
+| Item | Decision / state |
+|---|---|
+| CRLF line endings (**new blocker found**) | **FIXED.** Every text file in the zip had Windows line endings, so `solve.sh` died on `set -euo pipefail\r` and `test.sh` wrote into `/logs/verifier\r`: **the Oracle could not score at all.** All files are now LF, and `.gitattributes` (`* -text`) stops git from converting them back on Windows. Emulated oracle: 1.0, 14/14 checks, 22/22 pytest lanes |
+| Incidental note checks (6) | **Keep.** Each maps 1:1 to a stated ask in `submission_format.md`. None is tagged `secondary`. Deleting them would leave asks with no verifier |
+| `consistency/` | **Removed** (not shipped) |
+| `evaluations/nop`, `evaluations/oracle` | **Removed** (R17 / no oracle evidence ships) |
+| `/app` footer in `instruction.md` | **Rewritten without absolute paths.** The agent's cwd is the image `WORKDIR` (`/app`), so "your current working directory" and "`input/` inside it" mean the same thing |
+| verifier.json → manifest.json | **Converter written and tested:** `tools/convert_to_manifest.py`. Run it only in Phase 6 (the last step), then re-run the Oracle |
+| GLM config | `glm-harbor-config.json` (validated against harbor 0.23.0) |
+
+Repo layout: `tech-b53-t4-store-rating-claim-verification/` is the working task folder. The
+commit `Baseline: mined task package exactly as received` is the untouched original, which you
+diff against for the README.
+
 Phase-by-phase plan to take the mined package to a submittable bundle:
 Oracle exactly 1.0, GLM-5.2 in the 1–3 of 4 band, clean evidence layout, README.md +
 review.csv + qc_report.html at the root.
@@ -57,7 +73,7 @@ against the gold. `score.py` gives **reward 1.0, 14/14**, and `test_outputs.py` 
 - **L2 (recipe):** the worked example in §3.2, `4.6out of 512 Ratings` → 512, pre-solves T1.
 - **L3 (acceptable):** `submission_format.md` defines "the claim whose mean sits exactly halfway". That is
   the definition of what the note must name, so it stays. It does reveal that a half case exists.
-- **L4 (ask the lead):** the harness footer in `instruction.md` mentions `/app/input`. The guide says no
+- **L4 (done: paths removed):** the harness footer in `instruction.md` mentions `/app/input`. The guide says no
   `/app/input` paths, but this footer is the standard harness contract. Keep it unless told otherwise.
 
 Ambiguity scan: I found no genuine two-answer readings in the current rules.
@@ -80,7 +96,7 @@ Ambiguity scan: I found no genuine two-answer readings in the current rules.
 
 - None of the checks has a `"category": "secondary"` field, so nothing is auto-deleted. The package uses
   `metadata.tag` core/incidental instead. An incidental failure gives 0.929, which is *not* a full pass.
-  **Decision for the lead:** is "incidental" treated as "secondary"? If yes, deleting those checks means also
+  **Decided: keep them.** The original question was whether "incidental" counts as "secondary". If yes, deleting those checks means also
   deleting the matching asks from `submission_format.md`, so that no ask is left without a verifier.
   My recommendation is to keep them, because they map 1:1 to stated asks and the platform scores 1/N.
 - The regex-heavy checks are `note_*`. The co-naming regexes embed a list of claim IDs whose drivers
@@ -88,9 +104,9 @@ Ambiguity scan: I found no genuine two-answer readings in the current rules.
 - There is no LLM judge anywhere, so `JUDGE_MODEL` does not matter for grading.
 
 ### 1.5 Packaging defects to fix
-- `evaluations/nop/` and `evaluations/oracle/` must be **deleted**. The bundle ships no oracle evidence, and
+- (done) `evaluations/nop/` and `evaluations/oracle/` must be **deleted**. The bundle ships no oracle evidence, and
   gate rule R17 scores `nop/` as a failed model run.
-- `consistency/` is mining-pipeline evidence keyed to the current `revision_key`. It becomes stale
+- (done) `consistency/` is mining-pipeline evidence keyed to the current `revision_key`. It becomes stale
   (misleading) after hardening. Remove it before the final zip, or regenerate it if the team has the tool.
   Confirm this with the lead.
 - `tests/test.sh` writes `score.json`, `reward.txt` and `ctrf.json`, but **no `verifier_summary.json`**,
@@ -101,28 +117,67 @@ Ambiguity scan: I found no genuine two-answer readings in the current rules.
 
 ---
 
-## Phase 1 — Setup and baseline (≈ 30 min)
-1. Extract the zip to your working folder. Commit the untouched package to git as **baseline**, so the
-   README diff writes itself.
-2. `source ~/.config/harbor/env`, then check that `OPENAI_API_KEY`, `OPENAI_BASE_URL` and `JUDGE_MODEL`
-   are set.
-3. Create `glm-harbor-config.json` with `tasks[0].path` pointing at the task and
-   `job_name=b53-t4-store-rating-<round>`.
-4. Create a local fast-check venv on **Python 3.12** (the `.pyc` magic is 3.12, and 3.11 cannot import it)
-   with the Dockerfile's pins (pytest 8.4.1, pytest-json-ctrf 0.3.5, pydantic 2.12.5, jsonpath-ng, tenacity).
-   Use it for second-long grader checks between official runs:
-   ```bash
-   HARBOR_TASK_WORKSPACE=$PWD/ws python3.12 tests/score.py
-   HARBOR_TASK_WORKSPACE=$PWD/ws python3.12 -m pytest -q tests/test_outputs.py
-   ```
+## Phase 1 — Setup on Windows (cmd)
+
+Folder layout:
+```
+C:\Users\amitb\Task02\
+  glm.env                      your key file (never inside repo\, never zipped)
+  original\                    the mined zip + its extraction: read-only reference, never run
+  repo\                        git clone of this branch: the ONLY copy you run and edit
+    tech-b53-t4-store-rating-claim-verification\
+    tools\   glm-harbor-config.json   ROADMAP.md
+  jobs\                        harbor output (created automatically)
+```
+
+One-time install (Docker Desktop must be running, WSL2 backend):
+```bat
+py -3.12 -m pip install --upgrade harbor
+harbor --version
+docker version
+cd /d C:\Users\amitb\Task02
+git clone -b claude/peaceful-mayer-w7be20 https://github.com/saavanqazi/task02 repo
+```
+Harbor needs Python ≥ 3.12. Without git, use GitHub's "Download ZIP" on the branch and extract it
+to `repo\`.
+
+**Never** open and save `.sh` files in Notepad, and never run the task from `original\`. The
+original has the CRLF bug.
+
+`glm.env` needs no quotes and no spaces around `=`. Harbor reads it with `--env-file`, so you don't
+need to `set` anything in cmd. If your harbor build has no `--env-file`, load it into the session:
+```bat
+for /f "usebackq tokens=1,* delims==" %a in ("C:\Users\amitb\Task02\glm.env") do set "%a=%b"
+```
+(Inside a `.bat` file, write `%%a` / `%%b`.)
 
 ## Phase 2 — Baseline Oracle and GLM battery (≈ 1–2 h wall clock)
-1. Run the Oracle:
-   `harbor run -p "$TASK" -a oracle --ve OPENAI_API_KEY=… --ve OPENAI_BASE_URL=… -o /tmp/harbor-jobs --job-name oracle-b53t4-base -n 1 -y`.
-   It must be **1.0**. Run it twice.
-2. Budget check with `docker ps`, run a 1-run smoke test, then run the 4-run battery (`-k 4`).
-3. Record all 4 rewards and read every `items[]` entry of each failing run. Classify each failure as MODEL,
-   ambiguity, verifier bug or infra.
+All commands run from `C:\Users\amitb\Task02\repo`:
+```bat
+cd /d C:\Users\amitb\Task02\repo
+
+:: Oracle, twice (must be 1.0 both times). No LLM judge in this task, so no --ve is needed.
+harbor run -p tech-b53-t4-store-rating-claim-verification -a oracle -o ..\jobs --job-name oracle-b53t4-base-1 -n 1 -y
+harbor run -p tech-b53-t4-store-rating-claim-verification -a oracle -o ..\jobs --job-name oracle-b53t4-base-2 -n 1 -y
+
+:: Budget check, then a 1-run smoke test, then the 4-run battery
+docker ps --format "{{.Names}}"
+harbor run -c glm-harbor-config.json --env-file ..\glm.env --job-name b53t4-glm-smoke -y
+harbor run -c glm-harbor-config.json --env-file ..\glm.env --job-name b53t4-glm-base -k 4 -n 3 -y
+
+:: Read the rewards (one line per trial)
+for /d %d in (..\jobs\b53t4-glm-base\*) do @(echo %~nxd & type "%d\verifier\reward.txt" & echo.)
+harbor view ..\jobs
+```
+`-n` is `3 − (containers already running)`. If native-Windows harbor errors on paths or compose,
+run the same commands in WSL Ubuntu against the same folder (`/mnt/c/Users/amitb/Task02/repo`),
+with `\` → `/`.
+
+1. Both Oracle runs must be **1.0**.
+2. The smoke test must finish with a reward and a `trajectory.json`. A 0.0 with `exception.txt` is infra,
+   not difficulty.
+3. Record all 4 rewards and read every check in each failing run's `verifier\score.json` (this task's
+   per-check detail). Classify each failure as MODEL, ambiguity, verifier bug or infra.
 4. The expected outcome is **4/4**: the rules text spells out T1 and T2 (L1, L2), and the other traps are
    mechanical. Keep these runs as baseline evidence for README and review.csv. They do **not** ship.
 5. If the baseline is already 1–3/4 with MODEL-class failures, skip to Phase 5 (verify) and Phase 6.
@@ -186,10 +241,14 @@ the task ambiguous or unfair rather than harder.
    or data invalidates them, so re-run all 4.
 
 ## Phase 6 — Final packaging
-1. **Convert `tests/verifier.json` to `tests/manifest.json`**, a JSON list of `{name, source, assertion,
-   metadata}`. Point `score.py` and `test_outputs.py` at the new file. Ask whether the team has a converter
-   before writing one. Re-run the local checks and the **Oracle (1.0)** afterwards.
-2. Delete `evaluations/nop/` and `evaluations/oracle/`. Remove `consistency/` or regenerate it (see 1.5).
+1. **Convert:** `py -3.12 tools\convert_to_manifest.py tech-b53-t4-store-rating-claim-verification`.
+   This writes `tests\manifest.json` (the verifier list), repoints `score.py` and `test_outputs.py`,
+   and deletes `verifier.json`. It self-checks that the gold still scores 1.0 with identical per-check
+   verdicts. It needs the grader deps in that Python
+   (`py -3.12 -m pip install pytest==8.4.1 pytest-json-ctrf==0.3.5 pydantic==2.12.5 "jsonpath-ng>=1.6,<2" "tenacity>=9,<10"`).
+   Then re-run the **Oracle (1.0)** with harbor.
+2. Already done: `evaluations/nop/`, `evaluations/oracle/` and `consistency/` are removed.
+   Delete any `__pycache__` folders before zipping.
 3. `evaluations/difficulty/r1..r4/`: copy the four trial folders **unflattened**. Each needs
    `agent/trajectory.json`, `result.json`, `verifier/reward.json`, `verifier/verifier_summary.json` and
    `config.json`. No job-level `config.json`, `lock.json`, `job.log` or job-root `result.json`.
@@ -226,7 +285,8 @@ client rejects. The header is `review_check,status,review_notes,change_made,what
 | Cross-trial · Calibration | blank or "Turing runs this" | — |
 
 ## Phase 8 — Delivery Gate and submission
-1. Zip **the task folder only** and upload it to the QC platform. Run the Delivery Gate.
+1. Zip **the task folder only**. On Windows, from `repo\`: `tar -a -c -f ..\b53t4.zip tech-b53-t4-store-rating-claim-verification`
+   (built-in bsdtar keeps bytes and LF endings as they are). Upload it to the QC platform and run the Delivery Gate.
 2. Triage the findings. R3 (stability) is expected: mark it reviewed with "Turing runs stability".
 3. Download `qc_report.html` and put it at the task root next to `review.csv`. Re-zip and upload it as a
    **new version** of the same task, then run the Gate again.

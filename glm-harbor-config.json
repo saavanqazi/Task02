@@ -1,0 +1,12 @@
+{
+  "job_name": "b53t4-glm-smoke",
+  "jobs_dir": "../jobs",
+  "n_attempts": 1,
+  "n_concurrent_trials": 1,
+  "agents": [
+    { "name": "opencode", "model_name": "openai/glm-5.2" }
+  ],
+  "tasks": [
+    { "path": "tech-b53-t4-store-rating-claim-verification" }
+  ]
+}
