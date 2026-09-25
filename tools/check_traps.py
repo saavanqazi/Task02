@@ -42,7 +42,26 @@ MISTAKES = {
     "scale_misparse": "read '4.4out of 533' as 'out of 5' + 33",
     "snapshot_over_export": "prefer the snapshot wherever one exists",
     "app_only_join": "match export rows on app_id only",
+    "ignore_moves": "never read listing_changes.csv",
+    "one_hop_moves": "follow a listing's first move only, not a chain",
+    "relaunch_as_transfer": "treat a relaunched listing's new id as the claim's rows",
+    "moves_ignore_date": "apply every move, even one dated after breakdown_as_of",
 }
+
+
+def listing_on(moves, app_id, platform, day, mistake):
+    """app_id the claimed listing reports under on `day`; None once a relaunch ends it."""
+    if mistake == "ignore_moves":
+        return app_id
+    for hop in range(len(moves) + 1):
+        step = [m for m in moves if m["app_id"] == app_id and m["platform"] == platform
+                and (mistake == "moves_ignore_date" or m["changed_on"] <= day)]
+        if not step or (mistake == "one_hop_moves" and hop == 1):
+            return app_id
+        if step[0]["change"] == "relaunched" and mistake != "relaunch_as_transfer":
+            return None
+        app_id = step[0]["new_app_id"]
+    raise ValueError("move cycle")
 
 
 def round_mean(total, count, mistake):
@@ -90,6 +109,8 @@ def solve(inp: Path, mistake=None):
         lv = export.setdefault(key, {})
         s, n = int(r["stars"]), int(r["rating_count"])
         lv[s] = lv.get(s, 0) + n if mistake in ("sum_all_pulls", "app_only_join") else n
+    mpath = inp / "listing_changes.csv"
+    moves = list(csv.DictReader(open(mpath))) if mpath.exists() else []
     snaps = {}
     for r in csv.DictReader(open(inp / "listing_snapshot.csv")):
         if mistake == "last_snapshot_wins" or r["captured_on"] == snap_day:
@@ -97,9 +118,11 @@ def solve(inp: Path, mistake=None):
 
     rows, halves = [], []
     for c in csv.DictReader(open(inp / "claims.csv")):
-        key = (c["app_id"], c["platform"])
-        ekey = c["app_id"] if mistake == "app_only_join" else key
-        if ekey in export and not (mistake == "snapshot_over_export" and key in snaps):
+        now_id = listing_on(moves, c["app_id"], c["platform"], as_of, mistake)
+        snap_mistake = None if mistake == "moves_ignore_date" else mistake  # the mistake is in the export lookup
+        key = (listing_on(moves, c["app_id"], c["platform"], snap_day, snap_mistake), c["platform"])
+        ekey = now_id if mistake == "app_only_join" else (now_id, c["platform"])
+        if now_id is not None and ekey in export and not (mistake == "snapshot_over_export" and key in snaps):
             lv = export[ekey]
             count = sum(lv.values())
             total = sum(s * n for s, n in lv.items())

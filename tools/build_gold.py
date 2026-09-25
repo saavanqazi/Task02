@@ -41,7 +41,29 @@ def parse_display(s: str):
     return m.group(1), int(re.sub(r"[.,]", "", m.group(2)))
 
 
+def load_moves(inp: Path):
+    path = inp / "listing_changes.csv"
+    return list(csv.DictReader(open(path, newline=""))) if path.exists() else []
+
+
+def listing_on(moves, app_id, platform, day):
+    """app_id the claimed listing reports under on `day`, following every move dated on or
+    before it (chains included); None once a relaunch has ended the listing."""
+    for _ in range(len(moves) + 1):
+        step = [m for m in moves if m["app_id"] == app_id and m["platform"] == platform
+                and m["changed_on"] <= day]
+        if not step:
+            return app_id
+        assert len(step) == 1, f"two moves out of {app_id} {platform}"
+        if step[0]["change"] == "relaunched":
+            return None
+        assert step[0]["change"] == "transferred", step[0]
+        app_id = step[0]["new_app_id"]
+    raise ValueError("move cycle")
+
+
 def compute(inp: Path):
+    moves = load_moves(inp)
     facts = {r["field"]: r["value"] for r in csv.DictReader(open(inp / "verification_facts.csv", newline=""))}
     as_of, snap_day = facts["breakdown_as_of"], facts["snapshots_captured_on"]
     export = {}
@@ -60,8 +82,9 @@ def compute(inp: Path):
 
     rows, halves = [], []
     for c in csv.DictReader(open(inp / "claims.csv", newline="")):
-        key = (c["app_id"], c["platform"])
-        if key in export:
+        on_as_of = listing_on(moves, c["app_id"], c["platform"], as_of)
+        key = (on_as_of, c["platform"])
+        if on_as_of is not None and key in export:
             lv = export[key]
             assert sorted(lv) == [1, 2, 3, 4, 5], f"{key} lacks star levels"
             count = sum(lv.values())
@@ -70,7 +93,8 @@ def compute(inp: Path):
             if (mean * 20).denominator == 1 and (mean * 10).denominator != 1:
                 halves.append(c["claim_id"])
         else:
-            avg, count = parse_display(snaps[key])
+            snap_id = listing_on(moves, c["app_id"], c["platform"], snap_day)
+            avg, count = parse_display(snaps[(snap_id, c["platform"])])
         avg_wrong = Fraction(c["claimed_average"]) != Fraction(avg)
         cnt_wrong = int(c["claimed_rating_count"]) != count
         driver = CODES[0] if avg_wrong and cnt_wrong else CODES[1] if avg_wrong else CODES[2] if cnt_wrong else CODES[3]
@@ -99,6 +123,25 @@ def register_csv(rows) -> str:
 
 def cell(r):
     return {"true_average": r["true_average"], "true_count": str(r["true_count"]), "driver": r["driver"]}
+
+
+NUMBER_WORDS = ("zero one two three four five six seven eight nine ten eleven twelve thirteen "
+                "fourteen fifteen sixteen seventeen eighteen nineteen twenty").split()
+FIGURE_GROUP = re.compile(r"\(\?:(\d+)\|\1\\\.0\|\1\\\.00\|\\b([a-z]+)\\b\)")  # "(?:6|6\.0|6\.00|\bsix\b)"
+
+
+def figure_group(n: int) -> str:
+    return rf"(?:{n}|{n}\.0|{n}\.00|\b{NUMBER_WORDS[n]}\b)"
+
+
+def coname_regex(target, driver, rows) -> str:
+    """Same-paragraph co-naming of `target` and `driver`, with no other driver code and no
+    claim id carrying another driver in between (the mined pipeline's exact layout)."""
+    bound = lambda s: f"(?<![A-Za-z0-9]){re.escape(s)}(?![A-Za-z0-9])"
+    others = sorted(r["claim_id"] for r in rows if r["driver"] != driver)
+    stops = "|".join([bound(i) for i in others] + [bound(c) for c in CODES if c != driver])
+    gap = rf"(?:(?!(?:\n[ \t]*\n|\[Slide \d)|{stops}).){{0,900}}?"
+    return rf"(?is)(?:\b{target}\w*\b{gap}\b{driver}|\b{driver}\w*\b{gap}\b{target})"
 
 
 def check_note_regex(name, pattern, target, driver, rows, problems):
@@ -147,13 +190,23 @@ def main():
         for k, val in results.items():
             fig[k]["value"] = val
 
-    check_note_regex("note_largest_gap", v["note_largest_gap"]["assertion"]["expected"],
-                     largest, byid[largest]["driver"], rows, problems)
-    check_note_regex("note_half", v["note_half"]["assertion"]["expected"],
-                     half, byid[half]["driver"], rows, problems)
+    want_note = {
+        "note_largest_gap": coname_regex(largest, byid[largest]["driver"], rows),
+        "note_half": coname_regex(half, byid[half]["driver"], rows),
+    }
     for name, key in (("note_confirmed", "nothing_wrong_count"), ("note_miscounted", "count_wrong_count")):
-        if f"(?:{results[key]}|{results[key]}\\.0|" not in v[name]["assertion"]["expected"]:
-            problems.append(f"{name}: figure is not {results[key]}")
+        old = v[name]["assertion"]["expected"]
+        if len(FIGURE_GROUP.findall(old)) != 2:
+            problems.append(f"{name}: unexpected regex layout, cannot place the figure")
+        want_note[name] = FIGURE_GROUP.sub(lambda m, n=results[key]: figure_group(n), old)
+    for name, pattern in want_note.items():
+        if a.check and v[name]["assertion"]["expected"] != pattern:
+            problems.append(f"{name}: regex does not match the data")
+        elif not a.check:
+            v[name]["assertion"]["expected"] = pattern
+    check_note_regex("note_largest_gap", want_note["note_largest_gap"],
+                     largest, byid[largest]["driver"], rows, problems)
+    check_note_regex("note_half", want_note["note_half"], half, byid[half]["driver"], rows, problems)
 
     sol = T / "solution" / "files"
     gold = {"claim_register.csv": register_csv(rows),

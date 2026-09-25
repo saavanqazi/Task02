@@ -1,17 +1,17 @@
 # The couples-app roundup, checked against the stores
 
 Every rating figure the article quotes has been recomputed from the stores' own
-star-by-star export as pulled on 8 September, and, for the two listings that pull does not
-cover, read off the listing itself as it was displayed on 10 August, while the article was
-being written. The register delivered with this note gives each claim
+star-by-star export as pulled on 8 September, following each listing that has since moved
+to a new store id, and, for the three listings that pull does not cover, read off the
+listing itself as it was displayed on 10 August, while the article was being written. The register delivered with this note gives each claim
 the store's real average and count and names the figure the article got wrong, where it
 got one wrong at all.
 
-Confirmed in full: 6. On each of those the average and the
+Confirmed in full: 5. On each of those the average and the
 number of ratings the article quotes are the store's own figures to the decimal, and
 there is nothing to correct.
 
-Miscounted: 3. On each of those the article's average is the
+Miscounted: 4. On each of those the article's average is the
 store's but its number of ratings is not, and one of them is not close.
 
 RC-07 is the claim with the widest gap on the page, and its `driver` is

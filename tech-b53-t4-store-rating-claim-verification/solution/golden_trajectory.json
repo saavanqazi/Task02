@@ -17,6 +17,13 @@
     "name": "bash",
     "server": "local",
     "arguments": {
+      "command": "cat input/listing_changes.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
       "command": "cat input/ratings_breakdown.csv"
     }
   },
@@ -45,21 +52,21 @@
     "name": "bash",
     "server": "local",
     "arguments": {
-      "command": "printf '%s' 'claim_id,true_average,true_count,driver\nRC-01,4.4,1208,NOTHING_WRONG\nRC-02,4.2,800,AVERAGE_WRONG\nRC-03,4.6,2188,COUNT_WRONG\nRC-04,4.4,400,AVERAGE_WRONG\nRC-05,4.3,662,NOTHING_WRONG\nRC-06,3.6,846,BOTH_WRONG\nRC-07,4.4,533,COUNT_WRONG\nRC-08,4.4,1680,NOTHING_WRONG\nRC-09,3.8,1178,BOTH_WRONG\nRC-10,3.9,740,AVERAGE_WRONG\nRC-11,4.1,281,NOTHING_WRONG\nRC-12,4.0,1450,COUNT_WRONG\nRC-13,4.0,200,AVERAGE_WRONG\nRC-14,3.6,170,NOTHING_WRONG\nRC-15,3.6,1049,NOTHING_WRONG\n' > claim_register.csv"
+      "command": "printf '%s' 'claim_id,true_average,true_count,driver\nRC-01,4.4,1208,NOTHING_WRONG\nRC-02,4.2,800,AVERAGE_WRONG\nRC-03,4.6,2188,COUNT_WRONG\nRC-04,4.4,400,AVERAGE_WRONG\nRC-05,4.3,655,COUNT_WRONG\nRC-06,3.6,846,BOTH_WRONG\nRC-07,4.4,533,COUNT_WRONG\nRC-08,4.4,1680,NOTHING_WRONG\nRC-09,3.8,1203,BOTH_WRONG\nRC-10,3.9,740,AVERAGE_WRONG\nRC-11,4.1,281,NOTHING_WRONG\nRC-12,4.0,1450,COUNT_WRONG\nRC-13,4.0,200,AVERAGE_WRONG\nRC-14,3.6,170,NOTHING_WRONG\nRC-15,3.6,1049,NOTHING_WRONG\n' > claim_register.csv"
     }
   },
   {
     "name": "bash",
     "server": "local",
     "arguments": {
-      "command": "printf '%s' '{\n  \"nothing_wrong_count\": 6,\n  \"average_wrong_count\": 4,\n  \"count_wrong_count\": 3,\n  \"max_count_gap\": 500\n}\n' > results.json"
+      "command": "printf '%s' '{\n  \"nothing_wrong_count\": 5,\n  \"average_wrong_count\": 4,\n  \"count_wrong_count\": 4,\n  \"max_count_gap\": 500\n}\n' > results.json"
     }
   },
   {
     "name": "bash",
     "server": "local",
     "arguments": {
-      "command": "printf '%s' '# The couples-app roundup, checked against the stores\n\nEvery rating figure the article quotes has been recomputed from the stores'\"'\"' own\nstar-by-star export as pulled on 8 September, and, for the two listings that pull does not\ncover, read off the listing itself as it was displayed on 10 August, while the article was\nbeing written. The register delivered with this note gives each claim\nthe store'\"'\"'s real average and count and names the figure the article got wrong, where it\ngot one wrong at all.\n\nConfirmed in full: 6. On each of those the average and the\nnumber of ratings the article quotes are the store'\"'\"'s own figures to the decimal, and\nthere is nothing to correct.\n\nMiscounted: 3. On each of those the article'\"'\"'s average is the\nstore'\"'\"'s but its number of ratings is not, and one of them is not close.\n\nRC-07 is the claim with the widest gap on the page, and its `driver` is\n`COUNT_WRONG`. The article quotes 33 ratings for that\nlisting where the listing itself displays 533; the figure\nprinted is what is left of the store'\"'\"'s count once its first digit is read as the top of\nthe star scale, and the store prints no scale in that line. The average quoted for the\nsame listing is the store'\"'\"'s own.\n\nRC-04 is the closest call in the article, and its `driver` is `AVERAGE_WRONG`.\nThe store'\"'\"'s ratings for that listing work out to exactly 4.35,\nwhich the store'\"'\"'s own rule rounds up to 4.4; the article'\"'\"'s\n4.3 is the figure you get by cutting the mean short, or by\nrounding a stored approximation of it that sits a hair under the half. It is out by the narrowest margin a one-decimal\nfigure allows, and it is still out.\n\nThe remaining claims are on the register with the store'\"'\"'s figures beside them. Where an\naverage is wrong on its own, the cause is a rounding the article did differently from\nthe store; where the count and the average are wrong together, the article seems to have\nbeen working from figures that were never the store'\"'\"'s at all. Nothing in the piece is\noff by enough to change which app I would choose, except the count quoted against\nRC-07, which is the figure I was relying on.\n' > verification_note.md"
+      "command": "printf '%s' '# The couples-app roundup, checked against the stores\n\nEvery rating figure the article quotes has been recomputed from the stores'\"'\"' own\nstar-by-star export as pulled on 8 September, following each listing that has since moved\nto a new store id, and, for the three listings that pull does not cover, read off the\nlisting itself as it was displayed on 10 August, while the article was being written. The register delivered with this note gives each claim\nthe store'\"'\"'s real average and count and names the figure the article got wrong, where it\ngot one wrong at all.\n\nConfirmed in full: 5. On each of those the average and the\nnumber of ratings the article quotes are the store'\"'\"'s own figures to the decimal, and\nthere is nothing to correct.\n\nMiscounted: 4. On each of those the article'\"'\"'s average is the\nstore'\"'\"'s but its number of ratings is not, and one of them is not close.\n\nRC-07 is the claim with the widest gap on the page, and its `driver` is\n`COUNT_WRONG`. The article quotes 33 ratings for that\nlisting where the listing itself displays 533; the figure\nprinted is what is left of the store'\"'\"'s count once its first digit is read as the top of\nthe star scale, and the store prints no scale in that line. The average quoted for the\nsame listing is the store'\"'\"'s own.\n\nRC-04 is the closest call in the article, and its `driver` is `AVERAGE_WRONG`.\nThe store'\"'\"'s ratings for that listing work out to exactly 4.35,\nwhich the store'\"'\"'s own rule rounds up to 4.4; the article'\"'\"'s\n4.3 is the figure you get by cutting the mean short, or by\nrounding a stored approximation of it that sits a hair under the half. It is out by the narrowest margin a one-decimal\nfigure allows, and it is still out.\n\nThe remaining claims are on the register with the store'\"'\"'s figures beside them. Where an\naverage is wrong on its own, the cause is a rounding the article did differently from\nthe store; where the count and the average are wrong together, the article seems to have\nbeen working from figures that were never the store'\"'\"'s at all. Nothing in the piece is\noff by enough to change which app I would choose, except the count quoted against\nRC-07, which is the figure I was relying on.\n' > verification_note.md"
     }
   },
   {
