@@ -10,7 +10,7 @@
 | `evaluations/nop`, `evaluations/oracle` | **Removed** (R17 / no oracle evidence ships) |
 | `/app` footer in `instruction.md` | **Rewritten without absolute paths.** The agent's cwd is the image `WORKDIR` (`/app`), so "your current working directory" and "`input/` inside it" mean the same thing |
 | verifier.json → manifest.json | **Converter written and tested:** `tools/convert_to_manifest.py`. Run it only in Phase 6 (the last step), then re-run the Oracle |
-| GLM config | `glm-harbor-config.json` (validated against harbor 0.23.0) |
+| GLM agent | **terminus-2** + `openai/glm-5.2` (opencode crashed on the first smoke run; terminus-2 is accepted by QC since 2026-08-19). `glm-harbor-config.json` matches, but the explicit `-a/-m` commands below are the ones to use |
 
 Repo layout: `tech-b53-t4-store-rating-claim-verification/` is the working task folder. The
 commit `Baseline: mined task package exactly as received` is the untouched original, which you
@@ -160,10 +160,11 @@ cd /d C:\Users\amitb\Task02\repo
 harbor run -p tech-b53-t4-store-rating-claim-verification -a oracle -o ..\jobs --job-name oracle-b53t4-base-1 -n 1 -y
 harbor run -p tech-b53-t4-store-rating-claim-verification -a oracle -o ..\jobs --job-name oracle-b53t4-base-2 -n 1 -y
 
-:: Budget check, then a 1-run smoke test, then the 4-run battery
+:: Budget check, then a 1-run smoke test, then the 4-run battery (terminus-2 agent;
+:: opencode crashed with NonZeroAgentExitCodeError on the first smoke run)
 docker ps --format "{{.Names}}"
-harbor run -c glm-harbor-config.json --env-file ..\glm.env --job-name b53t4-glm-smoke -y
-harbor run -c glm-harbor-config.json --env-file ..\glm.env --job-name b53t4-glm-base -k 4 -n 3 -y
+harbor run -p tech-b53-t4-store-rating-claim-verification -a terminus-2 -m openai/glm-5.2 -k 1 -n 1 --env-file ..\glm.env -o ..\jobs --job-name b53t4-glm-smoke2 -y
+harbor run -p tech-b53-t4-store-rating-claim-verification -a terminus-2 -m openai/glm-5.2 -k 4 -n 3 --env-file ..\glm.env -o ..\jobs --job-name b53t4-glm-base -y
 
 :: Read the rewards (one line per trial)
 for /d %d in (..\jobs\b53t4-glm-base\*) do @(echo %~nxd & type "%d\verifier\reward.txt" & echo.)
