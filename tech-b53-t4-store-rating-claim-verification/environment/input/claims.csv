@@ -2,7 +2,7 @@ claim_id,app_id,app_name,platform,claimed_average,claimed_rating_count
 RC-01,A-01,Tandemline,IOS,4.4,1208
 RC-02,A-01,Tandemline,ANDROID,4.3,800
 RC-03,A-02,Pairlight,IOS,4.6,2140
-RC-04,A-02,Pairlight,ANDROID,4.2,400
+RC-04,A-02,Pairlight,ANDROID,4.3,400
 RC-05,A-03,Hearthnote,IOS,4.3,662
 RC-06,A-03,Hearthnote,ANDROID,3.9,900
 RC-07,A-04,Twovine,ANDROID,4.4,33
@@ -13,4 +13,4 @@ RC-11,A-06,Nestora,IOS,4.1,281
 RC-12,A-07,Lattice Two,ANDROID,4.0,1240
 RC-13,A-08,Halfmoon Pair,IOS,4.1,200
 RC-14,A-08,Halfmoon Pair,ANDROID,3.6,170
-RC-15,A-09,Kindred Loop,IOS,3.6,570
+RC-15,A-09,Kindred Loop,IOS,3.6,1049

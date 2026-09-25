@@ -13,43 +13,49 @@ Averages are one-decimal figures on a five-star scale; counts are whole numbers.
 
 ## 1. Which store figure governs a claim
 
-**1.1** `ratings_breakdown.csv` is the stores' own export, pulled on `breakdown_as_of`:
-one row per app, platform and star level, giving how many ratings sit at that level.
-Wherever the export carries rows for the claim's `app_id` and `platform`, those rows are
-the store's figure and nothing else is. They are read under rule 2.
+**1.1** `ratings_breakdown.csv` is the stores' own export log. Every pull adds one row per
+app, platform and star level, giving how many ratings sat at that level on the day in
+`pulled_on`. The store's figure for this verification is the pull made on
+`breakdown_as_of` and that pull alone: a row pulled on any other day, earlier or later, is
+not read, even where it is the only row a listing has. Wherever the `breakdown_as_of` pull
+carries rows for the claim's `app_id` and `platform`, those rows are the store's figure and
+nothing else is. They are read under rule 2.
 
-**1.2** `listing_snapshot.csv` is what each listing displayed on its `captured_on` date,
-before the article went up. It is older than the export, so where the export carries rows
-the snapshot decides nothing — not the count and not the average, however the two
-compare.
+**1.2** `listing_snapshot.csv` is what each listing displayed on its `captured_on` date.
+It is older than the export, so where the `breakdown_as_of` pull carries rows the snapshot
+decides nothing — not the count and not the average, however the two compare.
 
-**1.3** Where the export carries no rows at all for the claim's app and platform, the snapshot is the store's only figure for that listing and it stands as the true figure, read under rule 3. There is no newer figure to prefer.
+**1.3** Where the `breakdown_as_of` pull carries no rows for the claim's app and platform,
+the listing's snapshot is the store's only figure for it and stands as the true figure,
+read under rule 3. The snapshot that counts is the one captured on `snapshots_captured_on`,
+while the article was being written; a capture from any other day is not read. There is no
+newer figure to prefer.
 
 **1.4** An export row or a snapshot for an app the article makes no claim about is not
 verified and earns no register row.
 
 ## 2. The true figures from the export
 
-**2.1** `true_count` is the `rating_count` of the five star levels for that app and
-platform added together.
+**2.1** `true_count` is the `rating_count` of the five star levels in the
+`breakdown_as_of` pull for that app and platform, added together.
 
 **2.2** `true_average` is the weighted mean of the export — each star level's value
 multiplied by its `rating_count`, added across the five levels, divided by
-`true_count` — rounded ONCE to one decimal place with a half rounded up: a mean of 4.25 is written 4.3, and a mean of 3.85 is
-written 3.9. Do not round to two decimals on the way, do not cut the mean short, and do
-not round a half to the even digit. It is written with its one decimal — `4.0`, never
+`true_count` — rounded ONCE to one decimal place with a half rounded up: a mean of 2.45
+is written 2.5, and a mean of 1.15 is written 1.2. Do not round to two decimals on the way,
+do not cut the mean short, and do not round a half to the even digit. It is written with its one decimal — `4.0`, never
 `4`.
 
 ## 3. Reading a displayed string
 
 **3.1** A `displayed_string` reads `<average> out of <count> Ratings`. The leading number
 is the average as the store displays it, already to one decimal, and it stands as
-`true_average` with no further rounding. The trailing number, with any thousands
-separator removed, is `true_count`.
+`true_average` with no further rounding. The trailing number, with its thousands
+separator removed, whichever mark the storefront prints between thousands, is
+`true_count`.
 
-**3.2** Read the string as it is printed: the trailing number is the rating count in full: the five-star scale is never printed in that string, so no digit of the trailing number belongs to a scale. A listing that has dropped the
-space and reads `4.6out of 512 Ratings` displays 512 ratings, not `out of 5` followed by
-twelve.
+**3.2** Read the string as it is printed, whatever its spacing: the trailing number is the
+rating count in full, and the five-star scale is never printed in that string.
 
 ## 4. What the article got wrong
 

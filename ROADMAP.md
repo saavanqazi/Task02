@@ -12,6 +12,20 @@
 | verifier.json → manifest.json | **Converter written and tested:** `tools/convert_to_manifest.py`. Run it only in Phase 6 (the last step), then re-run the Oracle |
 | GLM agent | **terminus-2** + `openai/glm-5.2` (opencode crashed on the first smoke run; terminus-2 is accepted by QC since 2026-08-19). `glm-harbor-config.json` matches, but the explicit `-a/-m` commands below are the ones to use |
 
+### Hardening log
+
+| Round | Change | Oracle | GLM-5.2 (terminus-2) |
+|---|---|---|---|
+| Baseline | mined package + CRLF fix | 1.0 | **4/4**: smoke 1.0; battery 1.0, 1.0, 1.0, 1.0 (too easy) |
+| 1 (A+B) | Leaks removed (§2.2 examples now 2.45/1.15; §3.2 demo string gone). Export became a pull log (`pulled_on`: 09-01 / 09-08 / 09-15); only the 09-08 pull counts. A-09 IOS has no 09-08 pull, so it falls back to its snapshot, which prints `1.049` (thousands separator is a full stop). Later snapshot captures (08-20) added after the governing ones. Half-case moved to exact 4.35 (RC-04; float shortcuts give 4.3). RC-04 claim 4.2→4.3, RC-15 claim 570→1049. Drivers and results unchanged (6/4/3/500) | emulated 1.0, 14/14, 22/22 lanes | *pending* |
+
+Trap battery (`tools/check_traps.py`, 13 known-wrong methods):
+- **Baseline:** 6 of the 13 still scored 1.0.
+- **Round 1:** all 13 score 0.0, and the correct solver scores 1.0 under 4 differently worded notes.
+
+`tools/build_gold.py --check` confirms every pinned value (register, trap row, results, note-regex
+targets and exclusion lists) matches a recomputation from the inputs.
+
 Repo layout: `tech-b53-t4-store-rating-claim-verification/` is the working task folder. The
 commit `Baseline: mined task package exactly as received` is the untouched original, which you
 diff against for the README.

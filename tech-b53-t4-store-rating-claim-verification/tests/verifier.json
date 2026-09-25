@@ -131,7 +131,7 @@
               "driver": "COUNT_WRONG"
             },
             "RC-04": {
-              "true_average": "4.3",
+              "true_average": "4.4",
               "true_count": "400",
               "driver": "AVERAGE_WRONG"
             },
@@ -182,7 +182,7 @@
             },
             "RC-15": {
               "true_average": "3.6",
-              "true_count": "570",
+              "true_count": "1049",
               "driver": "NOTHING_WRONG"
             }
           },

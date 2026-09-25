@@ -1,9 +1,9 @@
 # The couples-app roundup, checked against the stores
 
 Every rating figure the article quotes has been recomputed from the stores' own
-star-by-star export as it stood on 8 September, and, for the one
-listing that export does not cover, read off the listing itself as it was displayed when
-the article was being written. The register delivered with this note gives each claim
+star-by-star export as pulled on 8 September, and, for the two listings that pull does not
+cover, read off the listing itself as it was displayed on 10 August, while the article was
+being written. The register delivered with this note gives each claim
 the store's real average and count and names the figure the article got wrong, where it
 got one wrong at all.
 
@@ -22,10 +22,10 @@ the star scale, and the store prints no scale in that line. The average quoted f
 same listing is the store's own.
 
 RC-04 is the closest call in the article, and its `driver` is `AVERAGE_WRONG`.
-The store's ratings for that listing work out to exactly 4.25,
-which the store's own rule rounds up to 4.3; the article's
-4.2 is the figure you get by cutting the mean short or by
-rounding a half to the even digit. It is out by the narrowest margin a one-decimal
+The store's ratings for that listing work out to exactly 4.35,
+which the store's own rule rounds up to 4.4; the article's
+4.3 is the figure you get by cutting the mean short, or by
+rounding a stored approximation of it that sits a hair under the half. It is out by the narrowest margin a one-decimal
 figure allows, and it is still out.
 
 The remaining claims are on the register with the store's figures beside them. Where an
