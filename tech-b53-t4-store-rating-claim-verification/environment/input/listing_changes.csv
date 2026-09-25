@@ -5,3 +5,11 @@ A-08,ANDROID,2026-09-12,transferred,A-12
 A-10,IOS,2026-09-05,transferred,A-15
 A-21,IOS,2026-09-08,transferred,A-31
 A-11,IOS,2026-09-03,transferred,A-14
+A-41,IOS,2026-08-20,transferred,A-71
+A-71,IOS,2026-08-29,transferred,A-72
+A-72,IOS,2026-09-04,transferred,A-73
+A-42,ANDROID,2026-08-18,transferred,A-74
+A-74,ANDROID,2026-09-02,relaunched,A-75
+A-43,IOS,2026-09-09,relaunched,A-76
+A-44,ANDROID,2026-09-08,transferred,A-77
+A-45,IOS,2026-08-25,transferred,A-78

@@ -52,6 +52,8 @@ MISTAKES = {
     "corrections_file_order": "let the last correction line in the file win, not the latest date",
     "corrections_ignore_date": "apply corrections published after breakdown_as_of too",
     "both_mean_of_means": "average the two listings' means for a BOTH claim",
+    "space_misparse": "read '1 482' as 482 (space not taken as a thousands separator)",
+    "correction_strict_before": "apply only corrections dated before breakdown_as_of (< not <=)",
 }
 
 
@@ -88,13 +90,15 @@ def round_mean(mean: Fraction, mistake):
 
 
 def parse_display(s, mistake):
-    m = re.fullmatch(r"(\d\.\d)\s*out of\s*([\d.,]+) Ratings", s)
+    m = re.fullmatch(r"(\d\.\d)\s*out of\s*(\d[\d., ]*?) Ratings", s)
     avg, raw = m.group(1), m.group(2)
     if mistake == "scale_misparse" and "out of" in s and not re.search(r"\s+out of", s):
         raw = raw[1:]
     if mistake == "locale_misparse" and "." in raw:
         return avg, int(float(raw.replace(",", "")))
-    return avg, int(re.sub(r"[.,]", "", raw))
+    if mistake == "space_misparse" and " " in raw:
+        return avg, int(raw.split(" ")[-1])
+    return avg, int(re.sub(r"[., ]", "", raw))
 
 
 def solve(inp: Path, mistake=None):
@@ -125,7 +129,8 @@ def solve(inp: Path, mistake=None):
         if mistake != "corrections_file_order":
             lines = sorted(lines, key=lambda r: r["corrected_on"])
         for r in lines:
-            if mistake == "corrections_ignore_date" or r["corrected_on"] <= as_of:
+            if mistake == "corrections_ignore_date" or r["corrected_on"] < as_of or (
+                    r["corrected_on"] == as_of and mistake != "correction_strict_before"):
                 fixes.setdefault(r["claim_id"], {})[r["field"]] = r["new_value"]
     snaps = {}
     for r in csv.DictReader(open(inp / "listing_snapshot.csv")):

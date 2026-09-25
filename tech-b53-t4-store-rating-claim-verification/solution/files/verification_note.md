@@ -10,10 +10,10 @@ after that day is not counted. The register delivered with this note gives each 
 store's real average and count and names the figure the article got wrong, where it got
 one wrong at all.
 
-Confirmed in full: 12. On each of those the average and the number of ratings the article
+Confirmed in full: 25. On each of those the average and the number of ratings the article
 quotes are the store's own figures to the decimal, and there is nothing to correct.
 
-Miscounted: 8. On each of those the article's average is the store's but its number of
+Miscounted: 15. On each of those the article's average is the store's but its number of
 ratings is not.
 
 RC-12 is the claim with the widest gap on the page, and its `driver` is `COUNT_WRONG`.

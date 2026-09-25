@@ -35,10 +35,10 @@ def one_decimal_half_up(x: Fraction) -> str:
 
 
 def parse_display(s: str):
-    m = re.fullmatch(r"\s*(\d\.\d)\s*out of\s*([\d.,]+)\s*Ratings\s*", s)
+    m = re.fullmatch(r"\s*(\d\.\d)\s*out of\s*(\d[\d., ]*?)\s*Ratings\s*", s)
     if not m:
         raise ValueError(f"unreadable displayed_string {s!r}")
-    return m.group(1), int(re.sub(r"[.,]", "", m.group(2)))
+    return m.group(1), int(re.sub(r"[., ]", "", m.group(2)))
 
 
 def load_moves(inp: Path):
@@ -82,7 +82,7 @@ def load_corrections(inp: Path, as_of: str):
     return out
 
 
-def compute(inp: Path):
+def compute(inp: Path, strict: bool = True):
     moves = load_moves(inp)
     facts = {r["field"]: r["value"] for r in csv.DictReader(open(inp / "verification_facts.csv", newline=""))}
     as_of, snap_day = facts["breakdown_as_of"], facts["snapshots_captured_on"]
@@ -131,6 +131,8 @@ def compute(inp: Path):
         rows.append({"claim_id": c["claim_id"], "true_average": avg, "true_count": count,
                      "driver": driver, "gap": abs(claimed_cnt - count),
                      "sources": [x[0] for x in parts]})
+    if not strict:
+        return rows, None, None, None
     gaps = sorted((r["gap"] for r in rows), reverse=True)
     assert gaps[0] > gaps[1], "max count gap is tied — the note's largest-gap claim is ambiguous"
     assert len(halves) == 1, f"need exactly one exact-half mean, found {halves}"
@@ -157,11 +159,22 @@ def cell(r):
 
 NUMBER_WORDS = ("zero one two three four five six seven eight nine ten eleven twelve thirteen "
                 "fourteen fifteen sixteen seventeen eighteen nineteen twenty").split()
-FIGURE_GROUP = re.compile(r"\(\?:(\d+)\|\1\\\.0\|\1\\\.00\|\\b([a-z]+)\\b\)")  # "(?:6|6\.0|6\.00|\bsix\b)"
+FIGURE_GROUP = re.compile(r"\(\?:(\d+)\|\1\\\.0\|\1\\\.00\|\\b([a-z]+(?:\[- \][a-z]+)?)\\b\)")  # "(?:6|6\.0|6\.00|\bsix\b)"
+
+
+TENS = "zero ten twenty thirty forty fifty sixty seventy eighty ninety".split()
+
+
+def number_word(n: int) -> str:
+    """Regex for n in words; compounds accept a hyphen or a space ("twenty-one")."""
+    if n <= 20:
+        return NUMBER_WORDS[n]
+    tens, ones = divmod(n, 10)
+    return TENS[tens] if not ones else rf"{TENS[tens]}[- ]{NUMBER_WORDS[ones]}"
 
 
 def figure_group(n: int) -> str:
-    return rf"(?:{n}|{n}\.0|{n}\.00|\b{NUMBER_WORDS[n]}\b)"
+    return rf"(?:{n}|{n}\.0|{n}\.00|\b{number_word(n)}\b)"
 
 
 def coname_regex(target, driver, rows) -> str:

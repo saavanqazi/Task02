@@ -259,6 +259,156 @@
               "true_average": "4.2",
               "true_count": "1171",
               "driver": "AVERAGE_WRONG"
+            },
+            "RC-31": {
+              "true_average": "4.4",
+              "true_count": "1380",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-32": {
+              "true_average": "3.6",
+              "true_count": "724",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-33": {
+              "true_average": "4.1",
+              "true_count": "540",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-34": {
+              "true_average": "4.0",
+              "true_count": "930",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-35": {
+              "true_average": "4.0",
+              "true_count": "2099",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-36": {
+              "true_average": "4.1",
+              "true_count": "1834",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-37": {
+              "true_average": "4.1",
+              "true_count": "1950",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-38": {
+              "true_average": "4.6",
+              "true_count": "126",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-39": {
+              "true_average": "4.0",
+              "true_count": "1484",
+              "driver": "BOTH_WRONG"
+            },
+            "RC-40": {
+              "true_average": "4.0",
+              "true_count": "781",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-41": {
+              "true_average": "4.0",
+              "true_count": "1275",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-42": {
+              "true_average": "4.1",
+              "true_count": "690",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-43": {
+              "true_average": "4.0",
+              "true_count": "1440",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-44": {
+              "true_average": "3.6",
+              "true_count": "610",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-45": {
+              "true_average": "4.2",
+              "true_count": "1300",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-46": {
+              "true_average": "3.7",
+              "true_count": "540",
+              "driver": "BOTH_WRONG"
+            },
+            "RC-47": {
+              "true_average": "4.3",
+              "true_count": "980",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-48": {
+              "true_average": "3.6",
+              "true_count": "415",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-49": {
+              "true_average": "4.0",
+              "true_count": "1720",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-50": {
+              "true_average": "3.8",
+              "true_count": "820",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-51": {
+              "true_average": "3.9",
+              "true_count": "2540",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-52": {
+              "true_average": "3.5",
+              "true_count": "365",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-53": {
+              "true_average": "4.3",
+              "true_count": "2210",
+              "driver": "BOTH_WRONG"
+            },
+            "RC-54": {
+              "true_average": "3.9",
+              "true_count": "1105",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-55": {
+              "true_average": "3.7",
+              "true_count": "1765",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-56": {
+              "true_average": "3.5",
+              "true_count": "660",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-57": {
+              "true_average": "4.0",
+              "true_count": "1890",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-58": {
+              "true_average": "4.0",
+              "true_count": "745",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-59": {
+              "true_average": "4.0",
+              "true_count": "2635",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-60": {
+              "true_average": "3.3",
+              "true_count": "300",
+              "driver": "NOTHING_WRONG"
             }
           },
           "row_set": [
@@ -291,7 +441,37 @@
             "RC-27",
             "RC-28",
             "RC-29",
-            "RC-30"
+            "RC-30",
+            "RC-31",
+            "RC-32",
+            "RC-33",
+            "RC-34",
+            "RC-35",
+            "RC-36",
+            "RC-37",
+            "RC-38",
+            "RC-39",
+            "RC-40",
+            "RC-41",
+            "RC-42",
+            "RC-43",
+            "RC-44",
+            "RC-45",
+            "RC-46",
+            "RC-47",
+            "RC-48",
+            "RC-49",
+            "RC-50",
+            "RC-51",
+            "RC-52",
+            "RC-53",
+            "RC-54",
+            "RC-55",
+            "RC-56",
+            "RC-57",
+            "RC-58",
+            "RC-59",
+            "RC-60"
           ],
           "row_set_ordered": true,
           "columns": [
@@ -334,15 +514,15 @@
         "expected": {
           "keys": {
             "nothing_wrong_count": {
-              "value": 12,
+              "value": 25,
               "tolerance": null
             },
             "average_wrong_count": {
-              "value": 7,
+              "value": 14,
               "tolerance": null
             },
             "count_wrong_count": {
-              "value": 8,
+              "value": 15,
               "tolerance": null
             },
             "max_count_gap": {
@@ -429,7 +609,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:\\bRC-12\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-17(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-28(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-30(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bCOUNT_WRONG|\\bCOUNT_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-17(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-28(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-30(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-12)",
+        "expected": "(?is)(?:\\bRC-12\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-17(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-28(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-30(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-31(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-33(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-34(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-36(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-37(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-38(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-39(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-41(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-42(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-43(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-44(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-46(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-47(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-48(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-50(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-51(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-52(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-53(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-54(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-55(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-57(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-58(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-60(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bCOUNT_WRONG|\\bCOUNT_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-17(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-28(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-30(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-31(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-33(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-34(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-36(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-37(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-38(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-39(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-41(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-42(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-43(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-44(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-46(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-47(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-48(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-50(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-51(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-52(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-53(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-54(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-55(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-57(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-58(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-60(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-12)",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"
@@ -455,7 +635,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:\\bRC-04\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-18(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-21(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-25(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-29(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bAVERAGE_WRONG|\\bAVERAGE_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-18(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-21(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-25(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-29(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-04)",
+        "expected": "(?is)(?:\\bRC-04\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-18(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-21(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-25(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-29(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-31(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-32(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-34(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-35(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-36(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-37(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-39(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-40(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-41(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-42(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-43(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-45(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-46(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-48(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-49(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-50(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-52(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-53(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-55(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-56(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-57(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-59(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-60(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bAVERAGE_WRONG|\\bAVERAGE_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-18(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-21(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-25(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-29(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-31(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-32(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-34(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-35(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-36(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-37(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-39(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-40(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-41(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-42(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-43(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-45(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-46(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-48(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-49(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-50(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-52(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-53(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-55(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-56(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-57(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-59(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-60(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-04)",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"
@@ -481,7 +661,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:12|12\\.0|12\\.00|\\btwelve\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:12|12\\.0|12\\.00|\\btwelve\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b))",
+        "expected": "(?is)(?:(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:25|25\\.0|25\\.00|\\btwenty[- ]five\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:25|25\\.0|25\\.00|\\btwenty[- ]five\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b))",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"
@@ -533,7 +713,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:8|8\\.0|8\\.00|\\beight\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:8|8\\.0|8\\.00|\\beight\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b))",
+        "expected": "(?is)(?:(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:15|15\\.0|15\\.00|\\bfifteen\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:15|15\\.0|15\\.00|\\bfifteen\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b))",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"

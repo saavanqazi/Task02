@@ -73,8 +73,8 @@ is written 2.5, and a mean of 1.15 is written 1.2. It is written with its one de
 **3.1** A `displayed_string` reads `<average> out of <count> Ratings`. The leading number
 is the average as the store displays it, already to one decimal, and it stands as
 `true_average` with no further rounding. The trailing number, with its thousands
-separator removed, whichever mark the storefront prints between thousands, is
-`true_count`.
+separator removed — a comma, a full stop or a space, whichever the storefront prints
+between thousands — is `true_count`.
 
 **3.2** Read the string as it is printed, whatever its spacing: the trailing number is the
 rating count in full, and the five-star scale is never printed in that string.
