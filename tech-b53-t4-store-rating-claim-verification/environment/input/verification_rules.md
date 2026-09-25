@@ -4,29 +4,34 @@ Take every claim the article makes through what follows and through nothing else
 article's figures are in `claims.csv`, the stores' star-by-star export log in
 `ratings_breakdown.csv`, what each listing displayed on the days it was captured in
 `listing_snapshot.csv`, the listings that moved to a new `app_id` in
-`listing_changes.csv`, and the dates in `verification_facts.csv`. The verification is
+`listing_changes.csv`, the corrections the site has published in `site_corrections.csv`,
+and the dates in `verification_facts.csv`. The verification is
 taken as it stood on `breakdown_as_of` and on no other day, so nothing below depends on
 when this file is read.
 
-A claim is one row of `claims.csv`: an `app_id`, a `platform`, the `claimed_average` the
-article printed for that listing and the `claimed_rating_count` it printed beside it.
+A claim is one row of `claims.csv`: an `app_id`, a `platform` (`IOS`, `ANDROID`, or
+`BOTH` for one figure quoted across the two stores), the `claimed_average` the article
+printed and the `claimed_rating_count` it printed beside it.
 Averages are one-decimal figures on a five-star scale; counts are whole numbers.
 
 ## 1. Which store figure governs a claim
 
-**1.1** `ratings_breakdown.csv` is the stores' own export log. Every pull adds one row per
-app, platform and star level, giving how many ratings sat at that level on the day in
+**1.1** `ratings_breakdown.csv` is the stores' own export log. Each line of a pull gives,
+for one app, platform and star level, how many ratings sat at that level on the day in
 `pulled_on`. The store's figure for this verification is the pull made on
-`breakdown_as_of` and that pull alone: a row pulled on any other day is not read. Wherever
-the `breakdown_as_of` pull carries rows for the claim's listing, under the `app_id` that
-listing reported under that day (rule 1.5), those rows are the store's figure and nothing
-else is. They are read under rule 2.
+`breakdown_as_of` and that pull alone: a row pulled on any other day is not read. A pull
+covers a listing only where it carries all five of that listing's star levels; a level
+nobody chose is still a line, with a `rating_count` of 0, and a pull that carries some of a
+listing's levels but not all five does not cover it. Wherever the `breakdown_as_of` pull
+covers the claim's listing, under the `app_id` that listing reported under that day
+(rule 1.5), its rows are the store's figure and nothing else is. They are read under
+rule 2.
 
 **1.2** `listing_snapshot.csv` is what each listing displayed on its `captured_on` date.
-It is older than the export, so where the `breakdown_as_of` pull carries rows the snapshot
-decides nothing — not the count and not the average, however the two compare.
+It is older than the export, so where the `breakdown_as_of` pull covers the listing the
+snapshot decides nothing — not the count and not the average, however the two compare.
 
-**1.3** Where the `breakdown_as_of` pull carries no rows for the claim's listing,
+**1.3** Where the `breakdown_as_of` pull does not cover the claim's listing,
 the listing's snapshot is the store's only figure for it and stands as the true figure,
 read under rule 3. The snapshot that counts is the one captured on `snapshots_captured_on`,
 while the article was being written; a capture from any other day is not read. There is no
@@ -44,6 +49,13 @@ and the claim's listing has no export from that day. A move dated after
 `breakdown_as_of` changes nothing for this verification. A claim names its listing by the
 `app_id` the article printed; snapshots are filed under the `app_id` the listing carried
 on the day they were captured.
+
+**1.6** A `BOTH` claim quotes one figure for the app across the two stores. Its `IOS`
+listing and its `ANDROID` listing are each taken through rules 1.1 to 1.5 and rule 3 on
+their own. Its `true_count` is the two listings' counts added. Its `true_average` is the
+mean of every rating on the two listings together, rounded once as in rule 2.2: a listing
+read from the export contributes each of its ratings at its star level, and a listing read
+from a snapshot contributes each of its ratings at its displayed average.
 
 ## 2. The true figures from the export
 
@@ -69,8 +81,16 @@ rating count in full, and the five-star scale is never printed in that string.
 
 ## 4. What the article got wrong
 
+**4.0** The article is taken as it stood on `breakdown_as_of`. `site_corrections.csv` is
+every correction the site has published: each line replaces one figure of one claim —
+`field` names which, `new_value` is the figure printed in its place — from `corrected_on`.
+A correction published on or before `breakdown_as_of` stands, one published later is not
+read, and where a figure was corrected more than once the latest correction that stands is
+the one printed. From here on, `claimed_average` and `claimed_rating_count` mean the
+figures as they stood after those corrections.
+
 **4.1** The claim's average is wrong where `claimed_average` is not `true_average` from
-rule 2 or 3, compared as one-decimal figures. Its count is wrong where
+rule 2, 3 or 1.6, compared as one-decimal figures. Its count is wrong where
 `claimed_rating_count` is not `true_count` — exactly: there is no tolerance, and a count
 out by one is a wrong count.
 

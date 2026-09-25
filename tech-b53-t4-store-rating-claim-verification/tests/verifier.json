@@ -184,6 +184,81 @@
               "true_average": "3.6",
               "true_count": "1049",
               "driver": "NOTHING_WRONG"
+            },
+            "RC-16": {
+              "true_average": "4.2",
+              "true_count": "2310",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-17": {
+              "true_average": "4.5",
+              "true_count": "348",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-18": {
+              "true_average": "3.9",
+              "true_count": "986",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-19": {
+              "true_average": "4.2",
+              "true_count": "910",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-20": {
+              "true_average": "4.1",
+              "true_count": "600",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-21": {
+              "true_average": "4.4",
+              "true_count": "318",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-22": {
+              "true_average": "4.4",
+              "true_count": "1000",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-23": {
+              "true_average": "3.8",
+              "true_count": "1943",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-24": {
+              "true_average": "4.3",
+              "true_count": "523",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-25": {
+              "true_average": "4.3",
+              "true_count": "1140",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-26": {
+              "true_average": "3.8",
+              "true_count": "365",
+              "driver": "BOTH_WRONG"
+            },
+            "RC-27": {
+              "true_average": "4.1",
+              "true_count": "200",
+              "driver": "NOTHING_WRONG"
+            },
+            "RC-28": {
+              "true_average": "4.1",
+              "true_count": "800",
+              "driver": "AVERAGE_WRONG"
+            },
+            "RC-29": {
+              "true_average": "3.9",
+              "true_count": "568",
+              "driver": "COUNT_WRONG"
+            },
+            "RC-30": {
+              "true_average": "4.2",
+              "true_count": "1171",
+              "driver": "AVERAGE_WRONG"
             }
           },
           "row_set": [
@@ -201,7 +276,22 @@
             "RC-12",
             "RC-13",
             "RC-14",
-            "RC-15"
+            "RC-15",
+            "RC-16",
+            "RC-17",
+            "RC-18",
+            "RC-19",
+            "RC-20",
+            "RC-21",
+            "RC-22",
+            "RC-23",
+            "RC-24",
+            "RC-25",
+            "RC-26",
+            "RC-27",
+            "RC-28",
+            "RC-29",
+            "RC-30"
           ],
           "row_set_ordered": true,
           "columns": [
@@ -244,19 +334,19 @@
         "expected": {
           "keys": {
             "nothing_wrong_count": {
-              "value": 5,
+              "value": 12,
               "tolerance": null
             },
             "average_wrong_count": {
-              "value": 4,
+              "value": 7,
               "tolerance": null
             },
             "count_wrong_count": {
-              "value": 4,
+              "value": 8,
               "tolerance": null
             },
             "max_count_gap": {
-              "value": 500,
+              "value": 210,
               "tolerance": null
             }
           },
@@ -339,7 +429,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:\\bRC-07\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bCOUNT_WRONG|\\bCOUNT_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-07)",
+        "expected": "(?is)(?:\\bRC-12\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-17(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-28(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-30(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bCOUNT_WRONG|\\bCOUNT_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-02(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-04(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-10(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-13(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-17(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-28(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-30(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])AVERAGE_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-12)",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"
@@ -365,7 +455,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:\\bRC-04\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bAVERAGE_WRONG|\\bAVERAGE_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-04)",
+        "expected": "(?is)(?:\\bRC-04\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-18(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-21(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-25(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-29(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bAVERAGE_WRONG|\\bAVERAGE_WRONG\\w*\\b(?:(?!(?:\\n[ \\t]*\\n|\\[Slide \\d)|(?<![A-Za-z0-9])RC\\-01(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-03(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-05(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-06(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-07(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-08(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-09(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-11(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-12(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-14(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-15(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-16(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-18(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-19(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-20(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-21(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-22(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-23(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-24(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-25(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-26(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-27(?![A-Za-z0-9])|(?<![A-Za-z0-9])RC\\-29(?![A-Za-z0-9])|(?<![A-Za-z0-9])BOTH_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])COUNT_WRONG(?![A-Za-z0-9])|(?<![A-Za-z0-9])NOTHING_WRONG(?![A-Za-z0-9])).){0,900}?\\bRC-04)",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"
@@ -391,7 +481,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:5|5\\.0|5\\.00|\\bfive\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:5|5\\.0|5\\.00|\\bfive\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b))",
+        "expected": "(?is)(?:(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:12|12\\.0|12\\.00|\\btwelve\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:12|12\\.0|12\\.00|\\btwelve\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m[-_ ]?e[-_ ]?d[-_\\s]*i[-_ ]?n[-_\\s]*f[-_ ]?u[-_ ]?l[-_ ]?l\\w*\\b|\\bc[-_ ]?o[-_ ]?n[-_ ]?f[-_ ]?i[-_ ]?r[-_ ]?m\\w*\\b))",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"
@@ -443,7 +533,7 @@
       },
       "assertion": {
         "type": "deterministic",
-        "expected": "(?is)(?:(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:4|4\\.0|4\\.00|\\bfour\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:4|4\\.0|4\\.00|\\bfour\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b))",
+        "expected": "(?is)(?:(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?<![-\\d.])(?:8|8\\.0|8\\.00|\\beight\\b)(?!\\d)(?!\\.\\d)|(?<![-\\d.])(?:8|8\\.0|8\\.00|\\beight\\b)(?!\\d)(?!\\.\\d)(?:(?![.!?](?:\\s|$))(?!\\n[ \\t]*(?:\\n|#|\\[Slide \\d)).){0,160}?(?:\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t[-_ ]?e[-_ ]?d\\w*\\b|\\bm[-_ ]?i[-_ ]?s[-_ ]?c[-_ ]?o[-_ ]?u[-_ ]?n[-_ ]?t\\w*\\b))",
         "deterministic": {
           "path": "$.text",
           "comparison": "regex_match"

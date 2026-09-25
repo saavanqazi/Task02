@@ -46,6 +46,12 @@ MISTAKES = {
     "one_hop_moves": "follow a listing's first move only, not a chain",
     "relaunch_as_transfer": "treat a relaunched listing's new id as the claim's rows",
     "moves_ignore_date": "apply every move, even one dated after breakdown_as_of",
+    "move_strict_before": "apply a move only after changed_on (< instead of <=)",
+    "missing_level_zero": "read a star level missing from the pull as 0 ratings",
+    "ignore_corrections": "never read site_corrections.csv",
+    "corrections_file_order": "let the last correction line in the file win, not the latest date",
+    "corrections_ignore_date": "apply corrections published after breakdown_as_of too",
+    "both_mean_of_means": "average the two listings' means for a BOTH claim",
 }
 
 
@@ -55,7 +61,8 @@ def listing_on(moves, app_id, platform, day, mistake):
         return app_id
     for hop in range(len(moves) + 1):
         step = [m for m in moves if m["app_id"] == app_id and m["platform"] == platform
-                and (mistake == "moves_ignore_date" or m["changed_on"] <= day)]
+                and (mistake == "moves_ignore_date" or m["changed_on"] < day
+                     or (m["changed_on"] == day and mistake != "move_strict_before"))]
         if not step or (mistake == "one_hop_moves" and hop == 1):
             return app_id
         if step[0]["change"] == "relaunched" and mistake != "relaunch_as_transfer":
@@ -64,8 +71,9 @@ def listing_on(moves, app_id, platform, day, mistake):
     raise ValueError("move cycle")
 
 
-def round_mean(total, count, mistake):
-    x = total / count
+def round_mean(mean: Fraction, mistake):
+    x = float(mean)
+    exact = Decimal(mean.numerator) / Decimal(mean.denominator)
     if mistake == "float_round":
         return f"{round(x, 1):.1f}"
     if mistake == "decimal_of_float":
@@ -73,11 +81,10 @@ def round_mean(total, count, mistake):
     if mistake == "fstring_format":
         return f"{x:.1f}"
     if mistake == "two_decimals_first":
-        two = (Decimal(total) / Decimal(count)).quantize(Decimal("0.01"), ROUND_HALF_UP)
-        return str(two.quantize(Decimal("0.1"), ROUND_HALF_UP))
+        return str(exact.quantize(Decimal("0.01"), ROUND_HALF_UP).quantize(Decimal("0.1"), ROUND_HALF_UP))
     if mistake == "truncate":
-        return f"{math.floor(Fraction(total, count) * 10) / 10:.1f}"
-    return str((Decimal(total) / Decimal(count)).quantize(Decimal("0.1"), ROUND_HALF_UP))
+        return f"{math.floor(mean * 10) / 10:.1f}"
+    return str(exact.quantize(Decimal("0.1"), ROUND_HALF_UP))
 
 
 def parse_display(s, mistake):
@@ -94,48 +101,71 @@ def solve(inp: Path, mistake=None):
     facts = {r["field"]: r["value"] for r in csv.DictReader(open(inp / "verification_facts.csv"))}
     as_of, snap_day = facts["breakdown_as_of"], facts["snapshots_captured_on"]
     raw = list(csv.DictReader(open(inp / "ratings_breakdown.csv")))
+    day = lambda r: r.get("pulled_on", as_of)
     if mistake == "latest_on_or_before":
         best = {}
         for r in raw:
             k = (r["app_id"], r["platform"])
-            if r.get("pulled_on", as_of) <= as_of and r.get("pulled_on", as_of) >= best.get(k, ""):
-                best[k] = r.get("pulled_on", as_of)
-        raw = [r for r in raw if best.get((r["app_id"], r["platform"])) == r.get("pulled_on", as_of)]
+            if day(r) <= as_of and day(r) >= best.get(k, ""):
+                best[k] = day(r)
+        raw = [r for r in raw if best.get((r["app_id"], r["platform"])) == day(r)]
     elif mistake not in ("sum_all_pulls", "last_pull_wins"):
-        raw = [r for r in raw if r.get("pulled_on", as_of) == as_of]
+        raw = [r for r in raw if day(r) == as_of]
     export = {}
     for r in raw:
         key = r["app_id"] if mistake == "app_only_join" else (r["app_id"], r["platform"])
         lv = export.setdefault(key, {})
         s, n = int(r["stars"]), int(r["rating_count"])
         lv[s] = lv.get(s, 0) + n if mistake in ("sum_all_pulls", "app_only_join") else n
-    mpath = inp / "listing_changes.csv"
-    moves = list(csv.DictReader(open(mpath))) if mpath.exists() else []
+    optional = lambda name: list(csv.DictReader(open(inp / name))) if (inp / name).exists() else []
+    moves = optional("listing_changes.csv")
+    fixes = {}
+    if mistake != "ignore_corrections":
+        lines = optional("site_corrections.csv")
+        if mistake != "corrections_file_order":
+            lines = sorted(lines, key=lambda r: r["corrected_on"])
+        for r in lines:
+            if mistake == "corrections_ignore_date" or r["corrected_on"] <= as_of:
+                fixes.setdefault(r["claim_id"], {})[r["field"]] = r["new_value"]
     snaps = {}
     for r in csv.DictReader(open(inp / "listing_snapshot.csv")):
         if mistake == "last_snapshot_wins" or r["captured_on"] == snap_day:
             snaps[(r["app_id"], r["platform"])] = r["displayed_string"]
 
+    def listing(app_id, platform):
+        now_id = listing_on(moves, app_id, platform, as_of, mistake)
+        snap_mistake = None if mistake == "moves_ignore_date" else mistake  # that mistake is in the export lookup
+        key = (listing_on(moves, app_id, platform, snap_day, snap_mistake), platform)
+        lv = export.get(now_id if mistake == "app_only_join" else (now_id, platform)) if now_id else None
+        usable = lv and (sorted(lv) == [1, 2, 3, 4, 5] or mistake == "missing_level_zero")
+        if usable and not (mistake == "snapshot_over_export" and key in snaps):
+            return "export", Fraction(sum(s * n for s, n in lv.items())), sum(lv.values())
+        avg, count = parse_display(snaps[key], mistake)
+        return "snapshot", avg, count
+
     rows, halves = [], []
     for c in csv.DictReader(open(inp / "claims.csv")):
-        now_id = listing_on(moves, c["app_id"], c["platform"], as_of, mistake)
-        snap_mistake = None if mistake == "moves_ignore_date" else mistake  # the mistake is in the export lookup
-        key = (listing_on(moves, c["app_id"], c["platform"], snap_day, snap_mistake), c["platform"])
-        ekey = now_id if mistake == "app_only_join" else (now_id, c["platform"])
-        if now_id is not None and ekey in export and not (mistake == "snapshot_over_export" and key in snaps):
-            lv = export[ekey]
-            count = sum(lv.values())
-            total = sum(s * n for s, n in lv.items())
-            avg = round_mean(total, count, mistake)
-            fr = Fraction(total, count)
-            if (fr * 20).denominator == 1 and (fr * 10).denominator != 1:
-                halves.append(c["claim_id"])
+        plats = ("IOS", "ANDROID") if c["platform"] == "BOTH" else (c["platform"],)
+        parts = [listing(c["app_id"], p) for p in plats]
+        count = sum(x[2] for x in parts)
+        if len(parts) == 1 and parts[0][0] == "snapshot":
+            avg = parts[0][1]
         else:
-            avg, count = parse_display(snaps[key], mistake)
-        aw = Decimal(c["claimed_average"]) != Decimal(avg)
-        cw = int(c["claimed_rating_count"]) != count
+            stars = lambda x: x[1] if x[0] == "export" else Fraction(x[1]) * x[2]
+            if mistake == "both_mean_of_means" and len(parts) == 2:
+                mean = sum(stars(x) / x[2] for x in parts) / 2
+            else:
+                mean = sum(stars(x) for x in parts) / count
+            avg = round_mean(mean, mistake)
+            if all(x[0] == "export" for x in parts) and (mean * 20).denominator == 1 and (mean * 10).denominator != 1:
+                halves.append(c["claim_id"])
+        fixed = fixes.get(c["claim_id"], {})
+        claimed_avg = fixed.get("claimed_average", c["claimed_average"])
+        claimed_cnt = int(fixed.get("claimed_rating_count", c["claimed_rating_count"]))
+        aw = Decimal(claimed_avg) != Decimal(avg)
+        cw = claimed_cnt != count
         d = "BOTH_WRONG" if aw and cw else "AVERAGE_WRONG" if aw else "COUNT_WRONG" if cw else "NOTHING_WRONG"
-        rows.append((c["claim_id"], avg, count, d, abs(int(c["claimed_rating_count"]) - count)))
+        rows.append((c["claim_id"], avg, count, d, abs(claimed_cnt - count)))
     return rows, halves
 
 
