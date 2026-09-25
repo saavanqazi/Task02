@@ -1,6 +1,0 @@
-installed gold deliverables into /app:
-claim_register.csv
-input
-results.json
-verification_note.md
-oracle: wrote /logs/agent/trajectory.json (11 steps)

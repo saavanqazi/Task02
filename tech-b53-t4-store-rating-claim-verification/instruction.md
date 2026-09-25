@@ -14,6 +14,6 @@ Save your deliverables into your current working directory using exactly these f
 
 ## Working environment
 
-- Your current working directory is `/app`, and it is writable.
-- The read-only attachments referred to as `input/` are at `/app/input`.
-- Write every deliverable into `/app`, at the exact filenames listed above.
+- Your current working directory is writable.
+- The read-only attachments referred to as `input/` are in the `input/` folder inside it.
+- Write every deliverable into your current working directory, at the exact filenames listed above.
