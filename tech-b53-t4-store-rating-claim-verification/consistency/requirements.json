@@ -1,0 +1,197 @@
+{
+ "task": "task_tech_b53_t4_store_rating_claim_verification",
+ "generated_by": "to_harbor_cli.build_requirements_json",
+ "verifier_total": 14,
+ "census": {
+  "claim_register.csv": {
+   "records": 15,
+   "columns": [
+    "driver",
+    "true_average",
+    "true_count"
+   ],
+   "cell_pins": 45,
+   "row_set": 15
+  }
+ },
+ "scoring": {
+  "policy": "two-tier: any core failure zeroes the reward; incidental failures cost their weight share (tests/score.py)",
+  "core": 8,
+  "incidental": [
+   "note_confirmed",
+   "note_confirmed_exactly_one",
+   "note_exists",
+   "note_miscounted",
+   "note_miscounted_exactly_one",
+   "note_prose_floor"
+  ],
+  "sidecar_note": "derived figures are paid once, in results.json; artifact cell pins grade PRIMARY data carried into the deliverable, and cardinality closures pay the count — neither re-pays a derived figure"
+ },
+ "duplicate_payments": [
+  {
+   "value": "3",
+   "checks": [
+    "note_miscounted",
+    "results_figures"
+   ],
+   "core_payers": [
+    "results_figures"
+   ]
+  },
+  {
+   "value": "6",
+   "checks": [
+    "note_confirmed",
+    "results_figures"
+   ],
+   "core_payers": [
+    "results_figures"
+   ]
+  }
+ ],
+ "requirements": [
+  {
+   "requirement_id": "R1",
+   "ask": "File the claim register at the agreed filename, carrying the header verbatim.",
+   "prompt_span": "Header, exactly: `claim_id,true_average,true_count,driver`",
+   "surface": "claim_register.csv",
+   "criticality": "major",
+   "graded_by": [
+    "register_exists",
+    "register_header"
+   ],
+   "graded_by_count": 2,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 inside table_equals, grouping-normalised; leading-zero ids exact)",
+    "column_order": "free (structural addressing)",
+    "row_order": "pinned (instruction-backed)",
+    "extra_columns": "forbidden (header pinned, instruction-backed)",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R2",
+   "ask": "The claim for the listing the export does not cover takes its figures off the displayed string read as printed, so its count is the trailing number in full and the article's count is wrong by the widest margin on the page rather than confirmed.",
+   "prompt_span": "the trailing number is the rating count in full",
+   "surface": "claim_register.csv",
+   "criticality": "critical",
+   "graded_by": [
+    "register_table_trap_rc07"
+   ],
+   "graded_by_count": 1,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 inside table_equals, grouping-normalised; leading-zero ids exact)",
+    "column_order": "free (structural addressing)",
+    "row_order": "pinned (instruction-backed)",
+    "extra_columns": "forbidden (header pinned, instruction-backed)",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R3",
+   "ask": "Every other claim is worked down the rules as written — the export wherever it carries rows, the weighted mean rounded once with a half up, the count compared exactly, then the driver — one row per claim, in the article's order, and nothing else.",
+   "prompt_span": "rounded ONCE to one decimal place with a half rounded up",
+   "surface": "claim_register.csv",
+   "criticality": "critical",
+   "graded_by": [
+    "register_table",
+    "register_table_trap_rc07"
+   ],
+   "graded_by_count": 2,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 inside table_equals, grouping-normalised; leading-zero ids exact)",
+    "column_order": "free (structural addressing)",
+    "row_order": "pinned (instruction-backed)",
+    "extra_columns": "forbidden (header pinned, instruction-backed)",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R4",
+   "ask": "Deliver the corrections note: the two counts stated as figures, and the two named claims each given, in the same paragraph, the driver code the register gives it.",
+   "prompt_span": "the identifiers themselves are required, never a description of the app",
+   "surface": "verification_note.md",
+   "criticality": "major",
+   "graded_by": [
+    "note_confirmed",
+    "note_confirmed_exactly_one",
+    "note_exists",
+    "note_half",
+    "note_largest_gap",
+    "note_miscounted",
+    "note_miscounted_exactly_one",
+    "note_prose_floor"
+   ],
+   "graded_by_count": 8,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (in_array over value-identical renderings)",
+    "column_order": "free (structural addressing)",
+    "row_order": "free",
+    "extra_columns": "allowed",
+    "extra_keys": "allowed"
+   },
+   "discrimination": null
+  },
+  {
+   "requirement_id": "R5",
+   "ask": "Report the three driver counts and the largest count gap in results.json, under a closed key set.",
+   "prompt_span": "A JSON object with exactly these keys and nothing else",
+   "surface": "results.json",
+   "criticality": "critical",
+   "graded_by": [
+    "results_exists",
+    "results_figures"
+   ],
+   "graded_by_count": 2,
+   "tolerance": {
+    "value": "pinned",
+    "numeric_rendering": "tolerant (numeric abs<=0.001 per key inside object_equals)",
+    "column_order": "free (structural addressing)",
+    "row_order": "free",
+    "extra_columns": "allowed",
+    "extra_keys": "forbidden (key set closed, instruction-backed)"
+   },
+   "discrimination": "Reading the displayed string as `out of 5` followed by the count yields 7 claims with nothing wrong, 2 with the count wrong and a largest gap of 210, not 6, 3 and 500; rounding a half to the even digit yields 7 with nothing wrong and 3 with the average wrong; cutting the weighted mean short instead of rounding it yields 5, 5 and 2; rounding to two decimals and then to one yields 8 with nothing wrong and 2 with the average wrong; comparing the unrounded mean against the claim yields 10 averages wrong and 1 count wrong; reading the listing snapshot instead of the export yields 3, 1 and 6; allowing a count within five percent yields 2 counts wrong and 7 with nothing wrong; counting a claim wrong on both figures under each of them yields 6 and 5, against 4 and 3; keeping the gap's sign yields a largest gap of 61; and adding the gaps up instead of taking the largest yields 873."
+  }
+ ],
+ "derivation": {
+  "depends_on": {
+   "nothing_wrong_count": [
+    "claims.csv",
+    "ratings_breakdown.csv",
+    "listing_snapshot.csv",
+    "verification_facts.csv",
+    "verification_rules.md"
+   ],
+   "average_wrong_count": [
+    "claims.csv",
+    "ratings_breakdown.csv",
+    "listing_snapshot.csv",
+    "verification_facts.csv",
+    "verification_rules.md"
+   ],
+   "count_wrong_count": [
+    "claims.csv",
+    "ratings_breakdown.csv",
+    "listing_snapshot.csv",
+    "verification_facts.csv",
+    "verification_rules.md"
+   ],
+   "max_count_gap": [
+    "claims.csv",
+    "ratings_breakdown.csv",
+    "listing_snapshot.csv",
+    "verification_facts.csv",
+    "verification_rules.md"
+   ]
+  },
+  "input_sha256": "c9e0a93eb277efcbd7871740634ca05d273fdacb4b5ecfaa0ae4c55eb50feefa"
+ }
+}

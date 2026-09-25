@@ -1,0 +1,82 @@
+{
+ "task": "task_tech_b53_t4_store_rating_claim_verification",
+ "n": 3,
+ "input_surface": [
+  "prompt",
+  "input/submission_format.md",
+  "input/verification_rules.md",
+  "solution values (neutral serialization)"
+ ],
+ "renderings": [
+  {
+   "api_failure": false,
+   "checks_pass": true,
+   "failed_checks": [],
+   "values_match_gold": true,
+   "files": [
+    "claim_register.csv",
+    "results.json",
+    "verification_note.md"
+   ],
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "2fd7cc9e6936f3036efa4666e3e7e4b3a703e84567e46143ebd284b51b44dc02",
+   "stamped_at": "2026-09-21T08:29:53-07:00"
+  },
+  {
+   "api_failure": false,
+   "checks_pass": true,
+   "failed_checks": [],
+   "values_match_gold": true,
+   "files": [
+    "claim_register.csv",
+    "results.json",
+    "verification_note.md"
+   ],
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "2fd7cc9e6936f3036efa4666e3e7e4b3a703e84567e46143ebd284b51b44dc02",
+   "stamped_at": "2026-09-21T08:29:53-07:00"
+  },
+  {
+   "api_failure": false,
+   "checks_pass": true,
+   "failed_checks": [],
+   "values_match_gold": true,
+   "files": [
+    "claim_register.csv",
+    "results.json",
+    "verification_note.md"
+   ],
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "author_family": "claude",
+   "revision_key": "2fd7cc9e6936f3036efa4666e3e7e4b3a703e84567e46143ebd284b51b44dc02",
+   "stamped_at": "2026-09-21T08:29:53-07:00"
+  }
+ ],
+ "findings": [],
+ "verdict": "pass",
+ "schema": 2,
+ "model": "glm-5.2",
+ "pool": [
+  {
+   "model": "glm-5.2",
+   "family": "glm",
+   "backend": "glm",
+   "slots": 3
+  }
+ ],
+ "pool_families": [
+  "glm"
+ ],
+ "pool_mode": "single-family",
+ "author_family": "claude",
+ "revision_key": "2fd7cc9e6936f3036efa4666e3e7e4b3a703e84567e46143ebd284b51b44dc02",
+ "stamped_at": "2026-09-21T08:29:53-07:00"
+}

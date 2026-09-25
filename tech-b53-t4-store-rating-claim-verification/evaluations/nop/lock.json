@@ -1,0 +1,35 @@
+{
+    "schema_version": 2,
+    "task": {
+        "name": "tech-b53-t4-store-rating-claim-verification",
+        "type": "local",
+        "digest": "sha256:a80faed905897d38c26d0b0cedaf21600ab67dbe9c050473676b1988d22737fb",
+        "path": "C:\\Users\\Syed Raza\\Downloads\\Minging_Prompt\\Minging_Prompt\\task_output\\it_tech_09\\bundles\\shannon-200\\tech-b53-t4-store-rating-claim-verification"
+    },
+    "install_only": false,
+    "timeout_multiplier": 1.0,
+    "agent": {
+        "name": "nop",
+        "skills": [],
+        "resume_trajectory": false,
+        "extra_allowed_hosts": [],
+        "kwargs": {},
+        "mcp_servers": []
+    },
+    "bridge_inputs": {},
+    "skills": [],
+    "environment": {
+        "type": "docker",
+        "force_build": false,
+        "delete": true,
+        "cpu_enforcement_policy": "auto",
+        "memory_enforcement_policy": "auto",
+        "extra_docker_compose": [],
+        "kwargs": {},
+        "extra_allowed_hosts": []
+    },
+    "verifier": {
+        "disable": false,
+        "environment_mode": "shared"
+    }
+}

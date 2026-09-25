@@ -1,0 +1,115 @@
+{
+  "reward": 0.0,
+  "core_failures": [
+    "register_exists",
+    "register_header",
+    "register_table_trap_rc07",
+    "register_table",
+    "results_figures",
+    "note_largest_gap",
+    "note_half",
+    "results_exists"
+  ],
+  "passed": 0,
+  "total": 14,
+  "checks": [
+    {
+      "name": "register_exists",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "assertion failed"
+    },
+    {
+      "name": "register_header",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: claim_register.csv"
+    },
+    {
+      "name": "register_table_trap_rc07",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: claim_register.csv"
+    },
+    {
+      "name": "register_table",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: claim_register.csv"
+    },
+    {
+      "name": "results_figures",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: results.json"
+    },
+    {
+      "name": "note_exists",
+      "tag": "incidental",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "assertion failed"
+    },
+    {
+      "name": "note_prose_floor",
+      "tag": "incidental",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "note_largest_gap",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "note_half",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "note_confirmed",
+      "tag": "incidental",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "note_confirmed_exactly_one",
+      "tag": "incidental",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "note_miscounted",
+      "tag": "incidental",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "note_miscounted_exactly_one",
+      "tag": "incidental",
+      "passed": false,
+      "weight": 0.0714285714,
+      "detail": "required file missing: verification_note.md"
+    },
+    {
+      "name": "results_exists",
+      "tag": "core",
+      "passed": false,
+      "weight": 0.0714285718,
+      "detail": "assertion failed"
+    }
+  ]
+}

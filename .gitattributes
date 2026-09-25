@@ -1,0 +1,3 @@
+# Store every file byte-for-byte: no CRLF/LF conversion on any OS.
+# The task ships bash scripts that break under CRLF inside the Linux container.
+* -text

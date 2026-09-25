@@ -1,0 +1,5 @@
+{
+ "signature": "908262d01e63",
+ "source": "infra/task-harness/rl_world_verifiers",
+ "note": "CRLF-agnostic SHA-256 of tests/rl_world_verifiers/**/*.py; build provenance for batch-uniformity, not the client Layer 0 hash (which the client computes from the .py directly)"
+}

@@ -1,0 +1,30 @@
+schema_version = "1.3"
+artifacts = []
+
+[task]
+name = "obi/tech-b53-t4-store-rating-claim-verification"
+description = "Check a review site's app-rating claims against the stores' own ratings breakdown"
+authors = []
+keywords = ["harbor", "b53", "tech", "non-connector", "offline", "variance_attribution"]
+
+[metadata]
+source_config = "infra/task-harness/configs/shannon-200/task_tech_b53_t4_store_rating_claim_verification"
+
+[verifier]
+timeout_sec = 600.0
+collect = []
+
+[verifier.env]
+
+[agent]
+timeout_sec = 1800.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 1200.0
+os = "linux"
+mcp_servers = []
+
+[environment.env]
+
+[solution.env]

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/claims.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/listing_snapshot.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/ratings_breakdown.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/submission_format.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/verification_facts.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "cat input/verification_rules.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "printf '%s' 'claim_id,true_average,true_count,driver\r\nRC-01,4.4,1208,NOTHING_WRONG\r\nRC-02,4.2,800,AVERAGE_WRONG\r\nRC-03,4.6,2188,COUNT_WRONG\r\nRC-04,4.3,400,AVERAGE_WRONG\r\nRC-05,4.3,662,NOTHING_WRONG\r\nRC-06,3.6,846,BOTH_WRONG\r\nRC-07,4.4,533,COUNT_WRONG\r\nRC-08,4.4,1680,NOTHING_WRONG\r\nRC-09,3.8,1178,BOTH_WRONG\r\nRC-10,3.9,740,AVERAGE_WRONG\r\nRC-11,4.1,281,NOTHING_WRONG\r\nRC-12,4.0,1450,COUNT_WRONG\r\nRC-13,4.0,200,AVERAGE_WRONG\r\nRC-14,3.6,170,NOTHING_WRONG\r\nRC-15,3.6,570,NOTHING_WRONG\r\n' > claim_register.csv"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "printf '%s' '{\r\n  \"nothing_wrong_count\": 6,\r\n  \"average_wrong_count\": 4,\r\n  \"count_wrong_count\": 3,\r\n  \"max_count_gap\": 500\r\n}\r\n' > results.json"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "printf '%s' '# The couples-app roundup, checked against the stores\r\n\r\nEvery rating figure the article quotes has been recomputed from the stores'\"'\"' own\r\nstar-by-star export as it stood on 8 September, and, for the one\r\nlisting that export does not cover, read off the listing itself as it was displayed when\r\nthe article was being written. The register delivered with this note gives each claim\r\nthe store'\"'\"'s real average and count and names the figure the article got wrong, where it\r\ngot one wrong at all.\r\n\r\nConfirmed in full: 6. On each of those the average and the\r\nnumber of ratings the article quotes are the store'\"'\"'s own figures to the decimal, and\r\nthere is nothing to correct.\r\n\r\nMiscounted: 3. On each of those the article'\"'\"'s average is the\r\nstore'\"'\"'s but its number of ratings is not, and one of them is not close.\r\n\r\nRC-07 is the claim with the widest gap on the page, and its `driver` is\r\n`COUNT_WRONG`. The article quotes 33 ratings for that\r\nlisting where the listing itself displays 533; the figure\r\nprinted is what is left of the store'\"'\"'s count once its first digit is read as the top of\r\nthe star scale, and the store prints no scale in that line. The average quoted for the\r\nsame listing is the store'\"'\"'s own.\r\n\r\nRC-04 is the closest call in the article, and its `driver` is `AVERAGE_WRONG`.\r\nThe store'\"'\"'s ratings for that listing work out to exactly 4.25,\r\nwhich the store'\"'\"'s own rule rounds up to 4.3; the article'\"'\"'s\r\n4.2 is the figure you get by cutting the mean short or by\r\nrounding a half to the even digit. It is out by the narrowest margin a one-decimal\r\nfigure allows, and it is still out.\r\n\r\nThe remaining claims are on the register with the store'\"'\"'s figures beside them. Where an\r\naverage is wrong on its own, the cause is a rounding the article did differently from\r\nthe store; where the count and the average are wrong together, the article seems to have\r\nbeen working from figures that were never the store'\"'\"'s at all. Nothing in the piece is\r\noff by enough to change which app I would choose, except the count quoted against\r\nRC-07, which is the figure I was relying on.\r\n' > verification_note.md"
+    }
+  },
+  {
+    "name": "bash",
+    "server": "local",
+    "arguments": {
+      "command": "ls -la claim_register.csv results.json verification_note.md"
+    }
+  }
+]
