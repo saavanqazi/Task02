@@ -4,8 +4,9 @@ Take every claim the article makes through what follows and through nothing else
 article's figures are in `claims.csv`, the stores' star-by-star export log in
 `ratings_breakdown.csv`, what each listing displayed on the days it was captured in
 `listing_snapshot.csv`, the listings that moved to a new `app_id` in
-`listing_changes.csv`, the corrections the site has published in `site_corrections.csv`,
-and the dates in `verification_facts.csv`. The verification is
+`listing_changes.csv`, the corrections the site has published in `site_corrections.csv`, what each store's
+listings displayed beside the export they displayed it from in `display_samples.csv`, and
+the dates in `verification_facts.csv`. The verification is
 taken as it stood on `breakdown_as_of` and on no other day, so nothing below depends on
 when this file is read.
 
@@ -64,8 +65,13 @@ from a snapshot contributes each of its ratings at its displayed average.
 
 **2.2** `true_average` is the weighted mean of the export — each star level's value
 multiplied by its `rating_count`, added across the five levels, divided by
-`true_count` — rounded ONCE to one decimal place with a half rounded up: a mean of 2.45
-is written 2.5, and a mean of 1.15 is written 1.2. It is written with its one decimal — `4.0`, never
+`true_count` — rounded ONCE to one decimal place, the way that listing's store rounds the
+average it displays. The stores do not publish how they round, and this file does not say.
+`display_samples.csv` records listings the article does not cover, each with its star-level
+counts beside the average its store displayed from them that same day: establish from it
+how each store rounds, and apply the rounding that store used on `breakdown_as_of`. A
+`BOTH` figure is displayed by no store; it is rounded with a half rounded up. However it
+is rounded, it is written with its one decimal — `4.0`, never
 `4`.
 
 ## 3. Reading a displayed string

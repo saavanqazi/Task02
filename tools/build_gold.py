@@ -34,6 +34,67 @@ def one_decimal_half_up(x: Fraction) -> str:
     return f"{tenths // 10}.{tenths % 10}"
 
 
+def _tenths(x: Fraction, mode: str) -> int:
+    lo = (x * 10).__floor__()
+    frac = x * 10 - lo
+    if mode == "trunc":
+        return lo
+    if mode == "ceil":
+        return lo if frac == 0 else lo + 1
+    if frac != Fraction(1, 2):
+        return lo + (1 if frac > Fraction(1, 2) else 0)
+    return {"half_up": lo + 1, "half_down": lo,
+            "half_even": lo if lo % 2 == 0 else lo + 1,
+            "half_odd": lo if lo % 2 == 1 else lo + 1}[mode]
+
+
+ROUNDING_MODES = ("half_up", "half_down", "half_even", "half_odd", "trunc", "ceil")
+
+
+def one_decimal(x: Fraction, mode: str) -> str:
+    t = _tenths(x, mode)
+    return f"{t // 10}.{t % 10}"
+
+
+def store_rounding(inp: Path, as_of: str) -> dict:
+    """Each store's display rounding on as_of, inferred from display_samples.csv.
+
+    Exactly one standard convention must fit a store's samples, or its samples must split
+    at exactly one date into two regimes that each fit exactly one convention (a change);
+    the later regime is the one in force. Anything else is an ambiguous task: fail."""
+    path = inp / "display_samples.csv"
+    if not path.exists():
+        return {"IOS": "half_up", "ANDROID": "half_up"}
+    samples = {}
+    for r in csv.DictReader(open(path, newline="")):
+        if r["captured_on"] > as_of:
+            continue
+        lv = {s: int(r[f"stars_{s}"]) for s in (5, 4, 3, 2, 1)}
+        mean = Fraction(sum(s * n for s, n in lv.items()), sum(lv.values()))
+        shown, count = parse_display(r["displayed_string"])
+        assert count == sum(lv.values()), f"sample count mismatch {r}"
+        samples.setdefault(r["platform"], []).append((r["captured_on"], mean, shown))
+    fitting = lambda group: [m for m in ROUNDING_MODES if all(one_decimal(x, m) == s for _, x, s in group)]
+    rules = {}
+    for plat, group in samples.items():
+        group.sort()
+        whole = fitting(group)
+        if len(whole) == 1:
+            rules[plat] = whole[0]
+            continue
+        assert not whole, f"{plat}: several conventions fit every sample {whole}"
+        days = sorted({d for d, _, _ in group})
+        splits = []
+        for cut in days[1:]:
+            before, after = [g for g in group if g[0] < cut], [g for g in group if g[0] >= cut]
+            fb, fa = fitting(before), fitting(after)
+            if len(fb) == 1 and len(fa) == 1 and fb != fa:
+                splits.append((cut, fb[0], fa[0]))
+        assert len(splits) == 1, f"{plat}: no unique change point {splits}"
+        rules[plat] = splits[0][2]
+    return rules
+
+
 def parse_display(s: str):
     m = re.fullmatch(r"\s*(\d\.\d)\s*out of\s*(\d[\d., ]*?)\s*Ratings\s*", s)
     if not m:
@@ -87,6 +148,7 @@ def compute(inp: Path, strict: bool = True):
     facts = {r["field"]: r["value"] for r in csv.DictReader(open(inp / "verification_facts.csv", newline=""))}
     as_of, snap_day = facts["breakdown_as_of"], facts["snapshots_captured_on"]
     corrections = load_corrections(inp, as_of)
+    rounding = store_rounding(inp, as_of)
     export = {}
     for r in csv.DictReader(open(inp / "ratings_breakdown.csv", newline="")):
         if r.get("pulled_on", as_of) != as_of:  # pre-log format = one pull on as_of
@@ -119,7 +181,9 @@ def compute(inp: Path, strict: bool = True):
         else:
             stars = sum(Fraction(x[1]) if x[0] == "export" else Fraction(x[1]) * x[2] for x in parts)
             mean = stars / count
-            avg = one_decimal_half_up(mean)
+            # a store displays its own listing its own way; a BOTH figure, which no store
+            # displays, is rounded with a half rounded up
+            avg = one_decimal(mean, rounding[c["platform"]] if len(parts) == 1 else "half_up")
             if all(x[0] == "export" for x in parts) and (mean * 20).denominator == 1 and (mean * 10).denominator != 1:
                 halves.append(c["claim_id"])
         fixed = corrections.get(c["claim_id"], {})

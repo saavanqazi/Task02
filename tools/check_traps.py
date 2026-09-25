@@ -24,7 +24,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN, ROUND_HALF_DOWN, ROUND_DOWN, ROUND_CEILING
 from fractions import Fraction
 from pathlib import Path
 
@@ -54,6 +54,10 @@ MISTAKES = {
     "both_mean_of_means": "average the two listings' means for a BOTH claim",
     "space_misparse": "read '1 482' as 482 (space not taken as a thousands separator)",
     "correction_strict_before": "apply only corrections dated before breakdown_as_of (< not <=)",
+    "assume_half_up": "round every store's average half up (no inference from display_samples)",
+    "android_old_rule": "use Android's rounding from before its change (half up)",
+    "ios_nearest": "round iOS to the nearest tenth instead of cutting it short",
+    "both_store_rule": "round a BOTH figure with the iOS store's rule",
 }
 
 
@@ -73,20 +77,48 @@ def listing_on(moves, app_id, platform, day, mistake):
     raise ValueError("move cycle")
 
 
-def round_mean(mean: Fraction, mistake):
+DEC_MODES = {"half_up": ROUND_HALF_UP, "half_even": ROUND_HALF_EVEN, "half_down": ROUND_HALF_DOWN,
+             "trunc": ROUND_DOWN, "ceil": ROUND_CEILING}
+
+
+def round_mean(mean: Fraction, mistake, mode="half_up"):
     x = float(mean)
     exact = Decimal(mean.numerator) / Decimal(mean.denominator)
     if mistake == "float_round":
         return f"{round(x, 1):.1f}"
     if mistake == "decimal_of_float":
-        return str(Decimal(x).quantize(Decimal("0.1"), ROUND_HALF_UP))
+        return str(Decimal(x).quantize(Decimal("0.1"), DEC_MODES[mode]))
     if mistake == "fstring_format":
         return f"{x:.1f}"
     if mistake == "two_decimals_first":
-        return str(exact.quantize(Decimal("0.01"), ROUND_HALF_UP).quantize(Decimal("0.1"), ROUND_HALF_UP))
+        return str(exact.quantize(Decimal("0.01"), ROUND_HALF_UP).quantize(Decimal("0.1"), DEC_MODES[mode]))
     if mistake == "truncate":
         return f"{math.floor(mean * 10) / 10:.1f}"
-    return str(exact.quantize(Decimal("0.1"), ROUND_HALF_UP))
+    return str(exact.quantize(Decimal("0.1"), DEC_MODES[mode]))
+
+
+def infer_modes(inp: Path, as_of: str):
+    """Independent re-derivation of each store's display rounding from display_samples.csv."""
+    path = inp / "display_samples.csv"
+    if not path.exists():
+        return {"IOS": "half_up", "ANDROID": "half_up"}, {"IOS": "half_up", "ANDROID": "half_up"}
+    by = {}
+    for r in csv.DictReader(open(path)):
+        if r["captured_on"] <= as_of:
+            lv = [int(r[f"stars_{s}"]) for s in (5, 4, 3, 2, 1)]
+            mean = Fraction(sum(s * k for s, k in zip((5, 4, 3, 2, 1), lv)), sum(lv))
+            by.setdefault(r["platform"], []).append((r["captured_on"], mean, r["displayed_string"].split()[0][:3]))
+    latest, earliest = {}, {}
+    for plat, rows in by.items():
+        rows.sort()
+        fits = lambda grp: [m for m in DEC_MODES if all(round_mean(x, None, m) == s for _, x, s in grp)]
+        # walk back from the newest sample while exactly one convention still explains them all
+        k = len(rows)
+        while k > 0 and fits(rows[k - 1:]):
+            k -= 1
+        latest[plat] = fits(rows[k:])[0]
+        earliest[plat] = fits(rows[:k])[0] if k else latest[plat]
+    return latest, earliest
 
 
 def parse_display(s, mistake):
@@ -132,6 +164,13 @@ def solve(inp: Path, mistake=None):
             if mistake == "corrections_ignore_date" or r["corrected_on"] < as_of or (
                     r["corrected_on"] == as_of and mistake != "correction_strict_before"):
                 fixes.setdefault(r["claim_id"], {})[r["field"]] = r["new_value"]
+    modes, old_modes = infer_modes(inp, as_of)
+    if mistake == "assume_half_up":
+        modes = {"IOS": "half_up", "ANDROID": "half_up"}
+    elif mistake == "android_old_rule":
+        modes = dict(modes, ANDROID=old_modes["ANDROID"])
+    elif mistake == "ios_nearest":
+        modes = dict(modes, IOS="half_up")
     snaps = {}
     for r in csv.DictReader(open(inp / "listing_snapshot.csv")):
         if mistake == "last_snapshot_wins" or r["captured_on"] == snap_day:
@@ -161,7 +200,9 @@ def solve(inp: Path, mistake=None):
                 mean = sum(stars(x) / x[2] for x in parts) / 2
             else:
                 mean = sum(stars(x) for x in parts) / count
-            avg = round_mean(mean, mistake)
+            mode = modes[c["platform"]] if len(parts) == 1 else (
+                modes["IOS"] if mistake == "both_store_rule" else "half_up")
+            avg = round_mean(mean, mistake, mode)
             if all(x[0] == "export" for x in parts) and (mean * 20).denominator == 1 and (mean * 10).denominator != 1:
                 halves.append(c["claim_id"])
         fixed = fixes.get(c["claim_id"], {})
